@@ -53,4 +53,8 @@ hoi
 
 ```{r}
 py$hoi
+gert::git_branch_checkout("attempt_bas")
+gert::git_add(c("*"))
+gert::git_commit(message = "Automatic commit")
+gert::git_push()
 ```
