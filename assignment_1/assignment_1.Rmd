@@ -2,7 +2,9 @@
 title: "Assignment 1"
 author: "Stanislav Avdeev & Bas Machielsen"
 date: "3/2/2021"
-output: pdf_document
+output: 
+  pdf_document: 
+    latex_engine: lualatex
 ---
 
 ```{r setup, include=FALSE}
@@ -11,15 +13,24 @@ knitr::opts_chunk$set(echo = TRUE)
 library(reticulate)
 ```
 
-## R Markdown
+## Instructions
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+I created a file .Renviron, where the python distribution is located on my system. You can find that by opening a terminal, and entering `$ which -a python python3`. Then, in RStudio, use `usethis::edit_r_environ()`, and add `RETICULATE_PYTHON="/Users/basmachielsen/opt/anaconda3/bin/python"` (or your directory) on a new line to the file. In this way, we can seamlessly interchange R and Python code chunks. Restart RStudio, and then everything is ready to go:
 
 ```{r cars}
 summary(cars)
+
+mtcars <- mtcars
 ```
+
+
+```{python}
+import pandas as pd
+import numpy as np
+
+r.mtcars.sum()
+```
+
 
 ## Including Plots
 
@@ -33,10 +44,13 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 ## Including Matplotlib
 
-```{python hoi}
-import pandas as pd
-import numpy as np
+```{python}
+hoi = np.arange(0,10)
 
-np.linspace(0, 10, 0.1)
+hoi
+```
 
+
+```{r}
+py$hoi
 ```
