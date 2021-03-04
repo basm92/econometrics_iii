@@ -5,8 +5,8 @@ title: |
   | Tinbergen Insitute
 author: |
   | Stanislav Avdeev & Bas Machielsen
-  | student no \hspace{5m} 590049bm
-  | stnavdeev@gmail.com \hspace{5m} 590049bm@eur.nl
+  | student no \hspace{5em} 590049bm
+  | stnavdeev@gmail.com \hspace{5em} 590049bm@eur.nl
 date: \today
 output: 
   pdf_document: 
