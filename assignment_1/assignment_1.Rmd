@@ -4,9 +4,9 @@ title: |
   | Assignment Part 1 & 2
   | Tinbergen Insitute
 author: |
-  | Stanislav Avdeev \hspace{4em} Bas Machielsen 
+  | Stanislav Avdeev \hspace{3em} Bas Machielsen 
   | student no \hspace{5em} 590049bm 
-  | stnavdeev@gmail.com \hspace{5em} 590049bm@eur.nl
+  | stnavdeev@gmail.com \hspace{4em} 590049bm@eur.nl
 date: \today
 output: 
   pdf_document: 
