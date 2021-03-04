@@ -4,8 +4,8 @@ title: |
   | Assignment Part 1 & 2
   | Tinbergen Insitute
 author: |
-  | Stanislav Avdeev \hspace{5em} Bas Machielsen \vspace{1em} 
-  | student no \hspace{5em} 590049bm \vspace{1em}
+  | Stanislav Avdeev \hspace{4em} Bas Machielsen 
+  | student no \hspace{5em} 590049bm 
   | stnavdeev@gmail.com \hspace{5em} 590049bm@eur.nl
 date: \today
 output: 
