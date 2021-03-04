@@ -1,8 +1,11 @@
 ---
 title: | 
-  | \Large{Assignment Part 1 & 2}
-  | \Large{Tinbergen Insitute}
-author: "Stanislav Avdeev & Bas Machielsen"
+  | Assignment Part 1 & 2
+  | Tinbergen Insitute
+author: |
+  | Stanislav Avdeev & Bas Machielsen
+  | student no & 590049bm
+  | stnavdeev@gmail.com & 590049bm@eur.nl
 date: "3/2/2021"
 output: 
   pdf_document: 
