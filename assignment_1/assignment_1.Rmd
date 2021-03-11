@@ -17,7 +17,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE,  # Если мы не хотим код-чанков, можем менять на echo = FALSE
                       warning = FALSE,
                       message = FALSE,
-                      out.width = "200pt", out.height = "175pt", 
+                      out.width = "250pt", out.height = "200pt", 
                       fig.align = "center")
 
 library(rio); library(tidyverse)
@@ -39,11 +39,6 @@ df <- readr::read_csv("./data/data_assign_p1.csv")
 df <- ts(df$GDP_QGR, 
          frequency = 4, 
          start = c(1987, 2))
-
-plot(df, 
-     xlab = "Time", 
-     ylab = "GDP Growth (%)", 
-     main = "GDP Growth over Time")
 ```
 
 In the above figure, we observe the growth rates of Dutch GDP from 1987 to 2009. 
@@ -51,8 +46,6 @@ In the above figure, we observe the growth rates of Dutch GDP from 1987 to 2009.
 ```{r plotacfpacf}
 autoc <- acf(df, 
     lag.max = 12, plot = F) 
-
-plot(autoc, main = "Autocorrelation Function")
 
 Box.test(df, 
          lag = 12, 
@@ -83,7 +76,26 @@ ar1_m <- arima(df, c(1, 0, 0), method = "CSS")
 
 ```{r}
 # Part 3: Plot ACF of residuals
-acf(ar1_m$resid, 12)
+autocred <- acf(ar1_m$resid, 12, 
+                plot = FALSE)
+```
+
+```{r figure, echo = FALSE}
+par(mfrow=c(2,2))
+
+plot(df, 
+     xlab = "Time", 
+     ylab = "GDP Growth (%)", 
+     main = "GDP Growth over Time")
+
+plot(autoc, main = "Autocorrelation Function")
+
+plot(pautoc, main = "Partial Autocorrelation Function")
+
+plot(autocred, main = "Autocorrelation Function of Residuals", 
+           xlab = "Time", 
+           ylab = "Autocorrelation")
+
 ```
 
 **Part d**
@@ -109,3 +121,4 @@ df_cil <- predict(ar1_m, n.ahead = 8)$pred - predict(ar1_m, n.ahead = 8)$se*1.96
 jb.norm.test(ar1_m$resid)
 # reject H0, innovations are not normally distributed
 ```
+
