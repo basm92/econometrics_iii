@@ -43,6 +43,7 @@ df <- ts(df$GDP_QGR,
 plot(df, xlab = "Time", ylab = "GDP Growth (%)", main = "GDP Growth over Time")
 ```
 
+random comments 
 In the above figure, we observe the growth rates of Dutch GDP from 1987 to 2009. 
 
 ```{r plotacfpacf}
