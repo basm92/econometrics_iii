@@ -5,7 +5,7 @@ title: |
   | Tinbergen Insitute
 author: |
   | Stanislav Avdeev \hspace{3em} Bas Machielsen 
-  | student 590050 \hspace{5em} 590049bm 
+  | 590050sa \hspace{5em} 590049bm 
   | stnavdeev@gmail.com \hspace{2em} 590049bm@eur.nl
 date: \today
 output: 
@@ -73,6 +73,8 @@ stargazer(ar4, ar3, ar2, ar1, type = "latex", header = FALSE)
 
 ```
 
+The table above shows us the coefficients of the AR(p) models with 1 to 4 lags included. Using a general-to-specific approach, we eliminate insignificant at the 0.05 level lags at each step. Column (1) shows that only the first lag is significant at the 0.1 level. The second lag has the lowest $\psi$ coefficient and the highest s.e., thus, we eliminate it first. As a result, we are left with the first lag in the model which is significant at the 0.05 level.
+
 **Part c**
 
 ```{r}
@@ -123,5 +125,9 @@ df_cil <- predict(ar1_m, n.ahead = 8)$pred - predict(ar1_m, n.ahead = 8)$se*1.96
 # Part 6: Check normality
 jb.norm.test(ar1_m$resid)
 # reject H0, innovations are not normally distributed
+```
+
+```{r}
+
 ```
 
