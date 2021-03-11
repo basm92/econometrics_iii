@@ -67,9 +67,9 @@ ar3 <- dynlm(df ~ L(df, 1) + L(df, 3) + L(df, 4))
 ar2 <- dynlm(df ~ L(df, 1) + L(df, 3))
 ar1 <- dynlm(df ~ L(df, 1))
 
-stargazer(ar4, ar3, ar2, ar1, type = "latex", header = FALSE)
+ar1_m <- forecast::Arima(df, c(1,0,0), include.constant = TRUE, method = "CSS")
 
-ar1_m <- arima(df, c(1, 0, 0))
+stargazer(ar4, ar3, ar2, ar1, type = "latex", header = FALSE)
 ```
 
 **Part c**
@@ -88,9 +88,11 @@ plot(df,
      ylab = "GDP Growth (%)", 
      main = "GDP Growth over Time")
 
-plot(autoc, main = "Autocorrelation Function")
+plot(autoc, 
+     main = "Autocorrelation Function")
 
-plot(pautoc, main = "Partial Autocorrelation Function")
+plot(pautoc, 
+     main = "Partial Autocorrelation Function")
 
 plot(autocred, main = "Autocorrelation Function of Residuals", 
            xlab = "Time", 
