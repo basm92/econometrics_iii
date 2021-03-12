@@ -130,9 +130,14 @@ $$
 
 ```{r}
 # Part 5: Produce CI
+phi <- ar1_m$coef[1]
+sigma <- sqrt(ar1_m$sigma2)
+
 df_ciu <- predict(ar1_m, n.ahead = 8)$pred + predict(ar1_m, n.ahead = 8)$se*1.96
 df_cil <- predict(ar1_m, n.ahead = 8)$pred - predict(ar1_m, n.ahead = 8)$se*1.96
 ```
+
+We can reproduce the forecasts by 
 
 **Part f**
 
