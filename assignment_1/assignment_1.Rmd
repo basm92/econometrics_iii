@@ -142,13 +142,24 @@ jb.norm.test(ar1_m$resid)
 # reject H0, innovations are not normally distributed
 ```
 
+```{r}
+true <- ts(c(0.49, -0.31, -2.7, -1.63, 0.28, 0.33, 0.66, 1.59, 0.51, 0.71, 0.81), 
+         frequency = 4, 
+         start = c(2009, 2))
+ts.plot(df)
+#points(true, type = "l", col = 'blue', lty = 1)
+points(df_pred, type = "l", col = 'red', lty = 1)
+points(df_ciu, type = "l", col = 'red', lty = 2)
+points(df_cil, type = "l", col = 'red', lty = 2)
+```
+
 ## Question 2
 
 ```{r}
 # Get the data
-df <- readr::read_csv("./data/data_assign_p2.csv")
+df2 <- readr::read_csv("./data/data_assign_p2.csv")
 
-df <- ts(df[,2:3], 
+df2 <- ts(df2[,2:3], 
          frequency = 4, 
          start = c(1987, 2))
 ```
@@ -157,16 +168,14 @@ df <- ts(df[,2:3],
 
 ```{r}
 # Part a: Plot the Dutch GDP/unemployment, AR and ADL
-plot(df)
+plot(df2)
 
-ar4 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 2) + L(df[,1], 3) + L(df[,1], 4))
-ar3 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3) + L(df[,1], 4))
-ar2 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3))
+ar4 <- dynlm(df2[,1] ~ L(df2[,1], 1) + L(df2[,1], 2) + L(df2[,1], 3) + L(df2[,1], 4))
+ar3 <- dynlm(df2[,1] ~ L(df2[,1], 1) + L(df2[,1], 3) + L(df2[,1], 4))
+ar2 <- dynlm(df2[,1] ~ L(df2[,1], 1) + L(df2[,1], 3))
 
-adl4 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 2) + L(df[,1], 3) + L(df[,1], 4) + L(df[,2], 1) + L(df[,2], 2) + L(df[,2], 3) + L(df[,2], 4))
-adl3 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3) + L(df[,1], 4))
-adl2 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3))
+adl4 <- dynlm(df2[,1] ~ L(df2[,1], 1) + L(df2[,1], 2) + L(df2[,1], 3) + L(df2[,1], 4) + L(df2[,2], 1) + L(df2[,2], 2) + L(df2[,2], 3) + L(df2[,2], 4))
 
-stargazer(adl4, adl3, adl2, type = "text", header = FALSE)
+stargazer(adl4, type = "text", header = FALSE)
 ```
 
