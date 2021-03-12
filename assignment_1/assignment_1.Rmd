@@ -127,7 +127,31 @@ jb.norm.test(ar1_m$resid)
 # reject H0, innovations are not normally distributed
 ```
 
-```{r}
+## Question 2
 
+```{r}
+# Get the data
+df <- readr::read_csv("./data/data_assign_p2.csv")
+
+df <- ts(df[,2:3], 
+         frequency = 4, 
+         start = c(1987, 2))
+```
+
+**Part (a)**
+
+```{r}
+# Part a: Plot the Dutch GDP/unemployment, AR and ADL
+plot(df)
+
+ar4 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 2) + L(df[,1], 3) + L(df[,1], 4))
+ar3 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3) + L(df[,1], 4))
+ar2 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3))
+
+adl4 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 2) + L(df[,1], 3) + L(df[,1], 4) + L(df[,2], 1) + L(df[,2], 2) + L(df[,2], 3) + L(df[,2], 4))
+adl3 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3) + L(df[,1], 4))
+adl2 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3))
+
+stargazer(adl4, adl3, adl2, type = "text", header = FALSE)
 ```
 
