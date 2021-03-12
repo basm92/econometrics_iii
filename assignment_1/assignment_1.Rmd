@@ -23,6 +23,7 @@ knitr::opts_chunk$set(echo = TRUE,  # Если мы не хотим код-ча�
 library(rio); library(tidyverse)
 library(dynlm) ; library(stargazer)
 library(normtest); library(reticulate)
+library(AER)
 
 ```
 
@@ -81,6 +82,7 @@ The table above shows us the coefficients of the AR(p) models with 1 to 4 lags i
 # Part 3: Plot ACF of residuals
 autocred <- acf(ar1_m$resid, 12, 
                 plot = FALSE)
+durbinWatsonTest(ar1)
 ```
 
 ```{r figure, echo = FALSE}
@@ -109,6 +111,7 @@ plot(autocred, main = "Autocorrelation Function of Residuals",
 ```{r}
 # Part 4: Forecast AR model for 2 years
 df_pred <- predict(ar1_m, n.ahead = 8)$pred
+
 ```
 
 **Part e**
