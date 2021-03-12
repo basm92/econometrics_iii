@@ -5,7 +5,7 @@ title: |
   | Tinbergen Insitute
 author: |
   | Stanislav Avdeev \hspace{3em} Bas Machielsen 
-  | student 590050 \hspace{5em} 590049bm 
+  | 590050sa \hspace{5em} 590049bm 
   | stnavdeev@gmail.com \hspace{2em} 590049bm@eur.nl
 date: \today
 output: 
@@ -23,6 +23,7 @@ knitr::opts_chunk$set(echo = TRUE,  # Если мы не хотим код-ча�
 library(rio); library(tidyverse)
 library(dynlm) ; library(stargazer)
 library(normtest); library(reticulate)
+library(AER)
 
 ```
 
@@ -68,21 +69,14 @@ ar1 <- dynlm(df ~ L(df, 1))
 
 ar1_m <- forecast::Arima(df, c(1,0,0), method = "CSS")
 
-stargazer(ar4, ar3, ar2, ar1, type = "latex", header = FALSE)
+stargazer(ar4, ar3, ar2, ar1, 
+          type = "latex", 
+          header = FALSE,
+          font.size = "small")
 
 ```
 
-
-
-**Part c**
-
-```{r}
-# Part 3: Plot ACF of residuals
-autocred <- acf(ar1_m$resid, 12, 
-                plot = FALSE)
-
-```
-
+The table above shows us the coefficients of the $AR(p)$ models with 1 to 4 lags included. Using a general-to-specific approach, we eliminate insignificant lags ($\alpha = 0.05$ level) at each step. Column (1) shows that only the first lag is significant at the 0.1 level. The second lag has the lowest $\psi$ coefficient and the highest s.e., thus, we eliminate it first. Doing this iteratively, we are left with the first lag in the model which is significant at the 0.05 level. Investigating the coefficient, we observe there is a 1-period persistence of the time series on its lagged value. The _degree_ of persistence, however, is not large, as the magnitude of the coefficient is fairly small (0.26). 
 
 ```{r figure, echo = FALSE}
 par(mfrow=c(2,2))
@@ -104,13 +98,33 @@ plot(autocred, main = "Autocorrelation Function of Residuals",
 
 ```
 
-**Part d**
+**Part c**
 
+```{r}
+# Part 3: Plot ACF of residuals
+autocred <- acf(ar1_m$resid, 12, 
+                plot = FALSE)
+
+durbinWatsonTest(ar1)
+
+```
+
+In the fourth plot above, we show the autocorrelation of the residuals. We observe that none of the coefficients attain significance. Hence, we think that the model is well-specified. Formally, we compute the Durbin-Watson test statistic, of which the output is shown above. The null hypothesis of no autocorrelation is not rejected. In an unreported plot, we also investigate the _partial_ autocorrelation of residuals, in which there is also no sign of autocorrelation. 
+
+
+**Part d**
 
 ```{r}
 # Part 4: Forecast AR model for 2 years
 df_pred <- predict(ar1_m, n.ahead = 8)$pred
+
 ```
+
+We derived the forecasts by making use of the conditional expectation as the forecast minimizing the forecast error under quadratic loss. The conditional expectation of the forecast for $T+1$ is: $\mathbb{E}[X_{T+1} | X_1, \dots, X_T] = \mathbb{E}[\phi X_T + \alpha + \epsilon_{T+1} | X_1, \dots, X_T] = \phi X_T + \alpha$. Similarly, the forecast for $T+2$ equals $\phi \mathbb{E}[X_{T+1} + \alpha] = \phi (\alpha + \phi X_T) + \alpha$. Generalizing this pattern, we then end up with the following recursive forecasts (for $j > 1$):
+
+$$
+\mathbb{E}[X_{T+j}] = \alpha + \alpha \cdot \left( \sum_{i = 1}^{j-1} \phi^i \right) + \phi^j X^T
+$$
 
 **Part e**
 
@@ -126,5 +140,33 @@ df_cil <- predict(ar1_m, n.ahead = 8)$pred - predict(ar1_m, n.ahead = 8)$se*1.96
 # Part 6: Check normality
 jb.norm.test(ar1_m$resid)
 # reject H0, innovations are not normally distributed
+```
+
+## Question 2
+
+```{r}
+# Get the data
+df <- readr::read_csv("./data/data_assign_p2.csv")
+
+df <- ts(df[,2:3], 
+         frequency = 4, 
+         start = c(1987, 2))
+```
+
+**Part (a)**
+
+```{r}
+# Part a: Plot the Dutch GDP/unemployment, AR and ADL
+plot(df)
+
+ar4 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 2) + L(df[,1], 3) + L(df[,1], 4))
+ar3 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3) + L(df[,1], 4))
+ar2 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3))
+
+adl4 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 2) + L(df[,1], 3) + L(df[,1], 4) + L(df[,2], 1) + L(df[,2], 2) + L(df[,2], 3) + L(df[,2], 4))
+adl3 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3) + L(df[,1], 4))
+adl2 <- dynlm(df[,1] ~ L(df[,1], 1) + L(df[,1], 3))
+
+stargazer(adl4, adl3, adl2, type = "text", header = FALSE)
 ```
 
