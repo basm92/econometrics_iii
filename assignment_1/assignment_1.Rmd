@@ -262,3 +262,81 @@ stargazer(ar, adl, type = "latex", header = FALSE,
 ```
 
 
+
+**Part 3 **
+
+Assuming strict exogeneity, we can interpret the coefficient estimates as being causal, in which case, taking $\delta X = 1$, we see that the long-run multiplier $\bar{Y} = \frac{\gamma_1}{1-\phi_1 - \phi_2} < 0$, which means that indeed an increase in the GDP growth rate causes a decrease in the unemployment rate of about 4 percentage points. However, it also seems plausible there is an simultaneous relationship between GDP and Unemployment, or perhaps both of them are shaped by more fundamental parameters. In this case, the coefficients do not warrant a causal explanation, and there is only a negative _correlation_ between GDP growth and unemployment. 
+
+**Part 4 **
+
+We know that the distribution of $Y_t | Y_{t-1} \sim N(\alpha + \phi_1 Y_{t-1} + \phi_3 Y_{t-3} + \gamma X_{t-1}, \sigma^2)$. Shifting everything by one period, we obtain that the distribution of $Y_{t+1}$ conditional on the realized values of $Y_t$ is:
+
+$$
+Y_{t+1} | Y_t \sim N(\alpha + \phi_1 Y_t + \phi_3 Y_{t-2} + \gamma_1 X_t, \sigma^2)
+$$
+
+Denote the mean of this distribution by $\mu$. Then, we are looking for:
+
+$$
+\mathbb{P}(Y_{t+1} > 0.078 | Y_t) = \mathbb{P}\left(\frac{Y_{t+1} - \mu}{\sigma} > \frac{0.078 - \mu}{\sigma}\right) = 1 - \Phi \left(\frac{0.078-\mu}{\sigma}\right) 
+$$
+Substituting $\mu = \dots$ and $\sigma = \text{Var}(u_i) = \dots$ gives: 
+
+
+**Part 5 **
+
+First, we produce an 8-quarter forecast for the AR-process underlying GDP growth:
+
+```{r}
+#input dataframe with one column
+forecast_gdp <- function(no_periods, model, df){
+
+  coefficients <- model$coefficients
+  
+  for(i in 1:no_periods){
+    prediction <- coefficients[1] + 
+    coefficients[2] * df[length(df)] + 
+    coefficients[3] * df[length(df) - 2]
+  
+    df <- c(df, unname(prediction))
+  
+  }
+  
+  df
+  
+}
+
+plot(ts(start = c(1987, 2), 
+        frequency = 4, 
+        forecast_gdp(8, ar, df2[,1])))
+```
+
+
+**Part 6 **
+
+```{r}
+# algorithm sketch, not fully thought out yet
+#irf_gdp <- function(df, model, lags_in_model, x, e, no_periods){
+
+# coefficients <- model$coefficients
+
+#
+# df <- data.frame(value = rep(x, lags_in_model))
+#
+#for(i in 1:no_periods){
+#    response <- coefficients[1] + 
+#    coefficients[2] * df[length(df)] + 
+#    coefficients[3] * df[length(df) - 2]
+  
+#    df <- c(df, unname(prediction))
+  
+#  }
+  
+
+
+#}
+
+
+#irf_unemp
+
+```
