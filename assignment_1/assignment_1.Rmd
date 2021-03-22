@@ -14,9 +14,16 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\n \\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+
 knitr::opts_chunk$set(echo = TRUE,  # Если мы не хотим код-чанков, можем менять на echo = FALSE
                       warning = FALSE,
                       message = FALSE,
+                      size = "small",
                       out.width = "300pt", out.height = "200pt", 
                       fig.align = "center")
 
@@ -262,7 +269,6 @@ stargazer(ar, adl, type = "latex", header = FALSE,
 ```
 
 
-
 **Part 3 **
 
 Assuming strict exogeneity, we can interpret the coefficient estimates as being causal, in which case, taking $\delta X = 1$, we see that the long-run multiplier $\bar{Y} = \frac{\gamma_1}{1-\phi_1 - \phi_2} < 0$, which means that indeed an increase in the GDP growth rate causes a decrease in the unemployment rate of about 4 percentage points. However, it also seems plausible there is an simultaneous relationship between GDP and Unemployment, or perhaps both of them are shaped by more fundamental parameters. In this case, the coefficients do not warrant a causal explanation, and there is only a negative _correlation_ between GDP growth and unemployment. 
@@ -280,8 +286,16 @@ Denote the mean of this distribution by $\mu$. Then, we are looking for:
 $$
 \mathbb{P}(Y_{t+1} > 0.078 | Y_t) = \mathbb{P}\left(\frac{Y_{t+1} - \mu}{\sigma} > \frac{0.078 - \mu}{\sigma}\right) = 1 - \Phi \left(\frac{0.078-\mu}{\sigma}\right) 
 $$
-Substituting $\mu = \dots$ and $\sigma = \text{Var}(u_i) = \dots$ gives: 
+Substituting $\mu$ and $\sigma$ gives: 
 
+```{r}
+mu <- adl$coefficients[1] + adl$coefficients[2]*7.8 +
+  adl$coefficients[3]*7.5 + adl$coefficients[4]*-0.37
+
+sigma <- sqrt(var(adl$residuals))
+```
+
+So that the probability of unemployment being over 7.8% is: `r 1-pnorm((7.8 - mu)/sigma)`, and the probability of it being below 7.8 is `r pnorm((7.8 - mu)/sigma)`. On the one hand, the IID gaussian innovations-assumption is very _ad hoc_, and made mainly because of convenience, but on the other hand, a Gaussian often does a good job when errors come from many (uncorrelated) sources, making it a more plausible description of reality. Crises however, show that 'tail events' occur with too high a probability to be described by even a Gaussian with a high variance (which would go at the cost of overall likelihood), so we conclude that the assumption is useful, but not particularly realistic. 
 
 **Part 5 **
 
@@ -326,21 +340,20 @@ ts(start = c(1987, 2),
 First, we record the impulse response function of GDP growth: 
 
 ```{r}
-# algorithm 
-irf_gdp <- function(model, lags_in_model, x, e, no_periods, reference_value){
+irf_gdp <- function(model, lags_in_model, e, no_periods, reference_value){
 
  coefficients <- model$coefficients
 
  # initial data frame
- irfs <- rep(x, lags_in_model)
- response <- x + e
+ irfs <- rep(0, lags_in_model)
+ response <- e
  
  irfs <-  c(irfs, response)
  
  # all other predictions
   for(i in 2:no_periods){
     
-    response <- x + coefficients[2] * irfs[length(irfs)] + 
+    response <- coefficients[2] * irfs[length(irfs)] + 
     coefficients[3] * irfs[length(irfs) - 2]
   
     irfs <- c(irfs, unname(response))
@@ -354,7 +367,58 @@ irf_gdp <- function(model, lags_in_model, x, e, no_periods, reference_value){
 
 }
 
-irf_gdp(ar, 3, 0, 2, 10, -0.37) %>%
-  plot(type = "l")
+```
 
+Now, we calculate the impulse response function of unemployment, using internally the impulse response function of GDP growth:
+
+```{r}
+
+irf_unemp <- function(model, lags_in_model, e, no_periods, reference_value){
+  
+  #initialization
+  adl_coefficients <- model$coefficients
+  ar_coefficients <- ar$coefficients
+  
+  #IRF for gdp
+  gdp_rates <- irf_gdp(ar, 3, e, no_periods, -0.37)
+  
+  unemp_rates <- rep(0, lags_in_model)
+  
+  for(i in 1:no_periods){
+    
+    response <- adl_coefficients[2] * unemp_rates[length(unemp_rates)] +
+      adl_coefficients[3] * unemp_rates[length(unemp_rates)-2] +
+      adl_coefficients[4] * gdp_rates$irfs[i+2]
+    
+    unemp_rates <- c(unemp_rates, unname(response))
+  
+  }
+
+  unemp_rates <- unemp_rates + reference_value
+  
+  data.frame(time = seq(from = -lags_in_model, to = no_periods -1, by = 1),
+            gdp = gdp_rates$irfs,
+            unemp = unemp_rates)
+  
+}
+
+```
+
+We observe a familiar pattern: following an exogenous shock in GDP, we see that GDP recovers quickly, owing to the fact that the coefficients from the AR-model are quite low in magnitude, and hence, the process is very stable and shocks do not last long.
+
+On the contrary, in the impulse responses of the ADL-model, we observe that the coefficient on the past unemployment is very high, indicating a high degree of persistence. This means practically that a shock in unemployment has long-lasting effects, and it takes a long time before unemployment reverts to its stationary value. Note that the effects of the GDP shock make themselves felt only a period after the shock, because the contemporaneous distributed-lag term is not present in the model. The main channel through which the shock permeates is, however, through its own lagged value, rather than through contemporaneous our lagged values of GDP. All of these observations are also in line with commonly accepted macroeconomic theory. 
+
+```{r}
+irf_unemp(adl, 3, 2, 10, 7.8) %>%
+  .[-c(1:2),2:3] %>%
+  ts(frequency = 4, 
+     start = c(2014, 1)) %>%
+  plot(main = "Unemployment - Positive shock")
+
+
+irf_unemp(adl, 3, -2, 10, 7.8) %>%
+  .[-c(1:2),2:3] %>%
+  ts(frequency = 4, 
+     start = c(2014, 1)) %>%
+  plot(main = "Unemployment - Negative shock")
 ```
