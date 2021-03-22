@@ -308,35 +308,50 @@ forecast_gdp <- function(no_periods, model, df){
 
 plot(ts(start = c(1987, 2), 
         frequency = 4, 
-        forecast_gdp(8, ar, df2[,1])))
+        forecast_gdp(8, ar, df2[,1])), ylab = "Realized and Predicted GDP Growth")
+
+
+# Predicted Values:
+ts(start = c(1987, 2), 
+        frequency = 4, 
+        forecast_gdp(8, ar, df2[,1])
+   ) %>%
+  .[(length(.)-8):length(.)]
+
 ```
 
 
 **Part 6 **
 
 ```{r}
-# algorithm sketch, not fully thought out yet
-#irf_gdp <- function(df, model, lags_in_model, x, e, no_periods){
+# algorithm 
+irf_gdp <- function(model, lags_in_model, x, e, no_periods){
 
-# coefficients <- model$coefficients
+ coefficients <- model$coefficients
 
-#
-# df <- data.frame(value = rep(x, lags_in_model))
-#
-#for(i in 1:no_periods){
-#    response <- coefficients[1] + 
-#    coefficients[2] * df[length(df)] + 
-#    coefficients[3] * df[length(df) - 2]
+ # initial data frame
+ irfs <- rep(x, lags_in_model)
+ response <- x + e
+ 
+ irfs <-  c(irfs, response)
+ 
+ # all other predictions
+  for(i in 2:no_periods){
+    
+    response <- coefficients[2] * irfs[length(irfs)] + 
+    coefficients[3] * irfs[length(irfs) - 2]
   
-#    df <- c(df, unname(prediction))
+    irfs <- c(irfs, unname(response))
   
-#  }
-  
+  }
 
+ data.frame(time = seq(from = -lags_in_model, to = no_periods -1, by = 1),
+            irfs = irfs)
 
-#}
+}
 
+irf_gdp(ar, 3, 0, 1, 10) %>%
+  plot(type = "l")
 
-#irf_unemp
 
 ```
