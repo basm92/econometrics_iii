@@ -323,9 +323,11 @@ ts(start = c(1987, 2),
 
 **Part 6 **
 
+First, we record the impulse response function of GDP growth: 
+
 ```{r}
 # algorithm 
-irf_gdp <- function(model, lags_in_model, x, e, no_periods){
+irf_gdp <- function(model, lags_in_model, x, e, no_periods, reference_value){
 
  coefficients <- model$coefficients
 
@@ -338,20 +340,21 @@ irf_gdp <- function(model, lags_in_model, x, e, no_periods){
  # all other predictions
   for(i in 2:no_periods){
     
-    response <- coefficients[2] * irfs[length(irfs)] + 
+    response <- x + coefficients[2] * irfs[length(irfs)] + 
     coefficients[3] * irfs[length(irfs) - 2]
   
     irfs <- c(irfs, unname(response))
   
   }
 
+ irfs <- irfs + reference_value
+ 
  data.frame(time = seq(from = -lags_in_model, to = no_periods -1, by = 1),
             irfs = irfs)
 
 }
 
-irf_gdp(ar, 3, 0, 1, 10) %>%
+irf_gdp(ar, 3, 0, 2, 10, -0.37) %>%
   plot(type = "l")
-
 
 ```
