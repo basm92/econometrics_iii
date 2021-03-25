@@ -268,24 +268,21 @@ adl <- recursive_reg(dataset = df2, equation = 'UN_RATE ~ L(UN_RATE, 1) +
 ```
 
 ```{r tablearadl, results='asis'}
-stargazer(ar, adl, type = "text", header = FALSE,
+stargazer(ar, adl, type = "latex", header = FALSE,
           font.size = "small", column.sep.width = "0pt",
           omit.stat = c("adj.rsq", "ser", "f"),
           column.labels = c("AR for GDP", "ADL for Unemp"))
 ```
 
+We observe that the GDP AR-process is an AR(3)-process, with the 2-period lag component being insignificant. This means that there is a one-period effect, but also some kind of seasonality. If the economy 2 periods ago was doing better, today's economy tends to do better as well (as evidenced by the positive sign of the coefficient). In general, it is expected that lags in an AR-process for GDP should be positive, indicating a kind of path dependency. The ADL-process for Unemployment is an ADL(3,1) process: focusing on the autoregressive component, the coefficient for the one-period lag is high in magnitude and positive, indicating a persistence effect in unemployment. The 3-period lag, however, is negative, indicating a kind of recovery: if unemployment decreased two-periods ago, it tends to recover today. Focusing on the distributed-lag components, we note that there is no contemporaneous effect of GDP on unemployment, indicating that a shock in GDP growth is only visible in the unemployment-series in the next period. The coefficient also has the expected sign: an increase in GDP growth is associated with a decrease in unemployment the next period.  
+
 **Part 2**
 
+We estimate short- and long-run multipliers, and the 2-step ahead multiplier. First, since there is no contemporaneous $X_t$, the short-run multiplier is equal to zero. Secondly, the one-step ahead multiplier can be easily obtained by observing that $Y_t$ is still at the same value, and the shock enters the process only at $t+1$: hence, the 1-step multiplier is equal to $\theta_1$ = `r coef(adl)[4]`. The two-step multiplier has to take into account that now $Y^*_{t+1}$ is different from $Y_{t+1}$, and that there is an influence from the AR-process $X_t$, so that the two-step multiplier is $\phi_1 \theta_1 + \theta_1 \gamma_1$. 
+
 ```{r}
-# Estimate short- and long-run multipliers, 2-step ahead multipliere
 lrm <- coef(adl)[4]/(1 - coef(adl)[2] - coef(adl)[3])
 tsm <- coef(adl)[2] * coef(adl)[4]
-```
-
-**Part 5**
-
-```{r}
-x <- predict(adl, n.ahead = 8)$pred
 ```
 
 
@@ -427,6 +424,8 @@ irf_unemp <- function(model, lags_in_model, e, no_periods, reference_value){
 We observe a familiar pattern: following an exogenous shock in GDP, we see that GDP recovers quickly, owing to the fact that the coefficients from the AR-model are quite low in magnitude, and hence, the process is very stable and shocks do not last long.
 
 On the contrary, in the impulse responses of the ADL-model, we observe that the coefficient on the past unemployment is very high, indicating a high degree of persistence. This means practically that a shock in unemployment has long-lasting effects, and it takes a long time before unemployment reverts to its stationary value. Note that the effects of the GDP shock make themselves felt only a period after the shock, because the contemporaneous distributed-lag term is not present in the model. The main channel through which the shock permeates is, however, through its own lagged value, rather than through contemporaneous our lagged values of GDP. All of these observations are also in line with commonly accepted macroeconomic theory. 
+
+Finally, we note that the impulse responses are somewhat distorted by the fact that the impulses are started out of equilibrium value. Since usually, the equilibrium values are normalized to 0, in this case, we start with different values, causing the IRF's to be a combination of the perturbation and the tendency towards equilibrium. 
 
 ```{r}
 irf_unemp(adl, 3, 2, 10, 7.8) %>%
