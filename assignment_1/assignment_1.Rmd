@@ -185,7 +185,8 @@ data %>%
   geom_line(aes(y = lower), color = "red", lty = "dashed") +
   geom_line(aes(y = prediction), color = "green", lty = "dashed") +
   ylab("Values") + xlab("Date") +
-  ggtitle("Actual and Predicted GDP series")
+  ggtitle("Actual and Predicted GDP series") +
+  theme_minimal()
 
 ```
 
@@ -267,10 +268,24 @@ adl <- recursive_reg(dataset = df2, equation = 'UN_RATE ~ L(UN_RATE, 1) +
 ```
 
 ```{r tablearadl, results='asis'}
-stargazer(ar, adl, type = "latex", header = FALSE,
+stargazer(ar, adl, type = "text", header = FALSE,
           font.size = "small", column.sep.width = "0pt",
           omit.stat = c("adj.rsq", "ser", "f"),
           column.labels = c("AR for GDP", "ADL for Unemp"))
+```
+
+**Part 2**
+
+```{r}
+# Estimate short- and long-run multipliers, 2-step ahead multipliere
+lrm <- coef(adl)[4]/(1 - coef(adl)[2] - coef(adl)[3])
+tsm <- coef(adl)[2] * coef(adl)[4]
+```
+
+**Part 5**
+
+```{r}
+x <- predict(adl, n.ahead = 8)$pred
 ```
 
 
