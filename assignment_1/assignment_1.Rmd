@@ -161,7 +161,12 @@ We check for normality of the residuals using the Jarque-Bera test:
 jb.norm.test(ar1_m$resid)
 ```
 
-According to the test, we have to reject H0, indicating that normality of the innovations is violated. In the figure below, we plot the forecasts (green, CIs in red) next to the actual data (black). 
+According to the test, we have to reject H0, indicating that normality of the innovations is violated. Hence, empirically, the assumption of normal residuals does not seem to be appropriate. The error variance might therefore not be estimated consistently, which (possibly) negatively affects the certitude of our forecasts. On the other hand, the zero autocorrelation in the residuals shows that our model is well-specified and there are no lagged GDP-terms in the error-term. 
+
+**Part 7**
+
+In the figure below, we compare the forecasts and actual values by plotting the forecasts (green, CIs in red) next to the actual data (black). 
+
 
 ```{r, message = FALSE, warning = FALSE}
 true <- ts(c(0.49, -0.31, -2.7, -1.63, 0.28, 0.33, 0.66, 1.59, 0.51, 0.71, 0.81), 
