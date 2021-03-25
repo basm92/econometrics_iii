@@ -278,13 +278,24 @@ We observe that the GDP AR-process is an AR(3)-process, with the 2-period lag co
 
 **Part 2**
 
-We estimate short- and long-run multipliers, and the 2-step ahead multiplier. First, since there is no contemporaneous $X_t$, the short-run multiplier is equal to zero. Secondly, the one-step ahead multiplier can be easily obtained by observing that $Y_t$ is still at the same value, and the shock enters the process only at $t+1$: hence, the 1-step multiplier is equal to $\theta_1$ = `r coef(adl)[4]`. The two-step multiplier has to take into account that now $Y^*_{t+1}$ is different from $Y_{t+1}$, and that there is an influence from the AR-process $X_t$, so that the two-step multiplier is $\phi_1 \theta_1 + \theta_1 \gamma_1$. 
+We estimate short- and long-run multipliers, and the 2-step ahead multiplier. Define the ADL-process as:
+
+$$
+Uemp_t = \alpha + \phi_1 \cdot Unemp_{t-1} + \phi_3 \cdot Unemp_{t-3} + \theta_1 \cdot GDP_{t-1} + \epsilon_t
+$$
+and the AR-process as:
+
+$$
+GDP_t = \alpha + \gamma_1 \cdot GDP_{t-1} + u_t
+$$
+
+First, since there is no contemporaneous $X_t$, the short-run multiplier is equal to zero. Secondly, the one-step ahead multiplier can be easily obtained by observing that $Y_t$ is still at the same value, and the shock enters the process only at $t+1$: hence, the 1-step multiplier is equal to $\theta_1$ = `r coef(adl)[4]`. The two-step multiplier has to take into account that now $Y^*_{t+1}$ is different from $Y_{t+1}$, and that there is an influence from the AR-process $X_t$, so that the two-step multiplier is $\phi_1 \theta_1 + \theta_1 \gamma_1$. Substituting the relevant values gives:
 
 ```{r}
+# still need to change this to the correct values
 lrm <- coef(adl)[4]/(1 - coef(adl)[2] - coef(adl)[3])
 tsm <- coef(adl)[2] * coef(adl)[4]
 ```
-
 
 **Part 3 **
 
