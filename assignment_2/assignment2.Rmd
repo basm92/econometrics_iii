@@ -173,3 +173,17 @@ The test seems to be significant for a number of stocks, indicating that for the
 
 **Part 3**
 
+The forecast $\mathbb{E}[P_{t+1} | D_t] = \mathbb{E}[P_{t+1} | P_t] = \mathbb{E}[P_t + \epsilon_t] = P_t$. Similarly, the forecast $\mathbb{E}[P_{t+2}] = \mathbb{E}[P_{t+1} + \epsilon_{t+1}] = \mathbb{E}[P_{t+1}] = P_t$. Generalizing this pattern, the forecast for $P_{t+h} = P_t$. The variance of the forecast is derived using the distribution:
+
+\begin{align*}
+P_{t+1} &= P_t + \epsilon_t \Rightarrow P_{t+1} | P_t \sim N(P_t, \sigma^2) \\
+P_{t+2} &= P_{t+1} + \epsilon_{t+1} = \\
+&= P_t + \epsilon_t + \epsilon_{t+1} \Rightarrow P_{t+2} | P_t \sim N(P_t, 2 \sigma^2) \\
+\end{align*}
+
+Generalizing this pattern, we can see that $\text{Var}(P_{t+h}) = h \cdot \sigma^2$. Hence, we can implement our forecasts in the following way:
+
+```{r}
+#forecast code
+```
+

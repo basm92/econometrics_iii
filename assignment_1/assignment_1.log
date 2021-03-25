@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2021.3.16)  25 MAR 2021 14:29
+This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2021.3.16)  25 MAR 2021 16:15
  restricted system commands enabled.
 **assignment_1.tex
 (./assignment_1.tex
@@ -994,9 +994,9 @@ Here is how much of LuaTeX's memory you used:
  533 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 12 attribute, 57 glue_spec
 , 12 attribute_list, 1 write nodes
-   avail lists: 2:1428,3:263,4:474,5:504,6:34,7:6864,8:57,9:674,10:22,11:404
+   avail lists: 2:1428,3:261,4:474,5:504,6:34,7:6864,8:57,9:674,10:22,11:404
  36650 multiletter control sequences out of 65536+600000
- 78 fonts using 23721263 bytes
+ 78 fonts using 23721527 bytes
  98i,10n,122p,484b,395s stack positions out of 5000i,500n,10000p,200000b,200000s
 </Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/public/lm-math/l
 atinmodern-math.otf></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opent
@@ -1015,7 +1015,7 @@ man10-bold.otf></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/p
 ublic/lm/lmroman12-bold.otf></Users/basmachielsen/Library/TinyTeX/texmf-dist/fon
 ts/opentype/public/lm/lmroman12-regular.otf></Users/basmachielsen/Library/TinyTe
 X/texmf-dist/fonts/opentype/public/lm/lmroman17-regular.otf>
-Output written on assignment_1.pdf (12 pages, 187017 bytes).
+Output written on assignment_1.pdf (12 pages, 187025 bytes).
 
 PDF statistics: 203 PDF objects out of 1000 (max. 8388607)
  134 compressed objects within 2 object streams
