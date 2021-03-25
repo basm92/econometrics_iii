@@ -1,0 +1,175 @@
+---
+title: | 
+  | Econometrics III
+  | Assignment Part 3, 4, 5
+  | Tinbergen Insitute
+author: |
+  | Stanislav Avdeev \hspace{3em} Bas Machielsen 
+  | 590050sa \hspace{5em} 590049bm 
+  | stnavdeev@gmail.com \hspace{2em} 590049bm@eur.nl
+date: \today
+output: 
+  pdf_document: 
+    latex_engine: lualatex
+---
+
+```{r setup, include=FALSE}
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\n \\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+})
+
+knitr::opts_chunk$set(echo = TRUE,  # Если мы не хотим код-чанков, можем менять на echo = FALSE
+                      warning = FALSE,
+                      message = FALSE,
+                      size = "small",
+                      out.width = "300pt", out.height = "200pt", 
+                      fig.align = "center")
+
+library(rio); library(tidyverse)
+library(dynlm) ; library(stargazer)
+library(normtest); library(reticulate)
+library(AER)
+
+```
+
+<!-- I created a file .Renviron, where the python distribution is located on my system. You can find that by opening a terminal, and entering `$ which -a python python3`. Then, in RStudio, use `usethis::edit_r_environ()`, and add `RETICULATE_PYTHON="/Users/basmachielsen/opt/anaconda3/bin/python"` (or your directory) on a new line to the file. In this way, we can seamlessly interchange R and Python code chunks. Restart RStudio, and then everything is ready to go: --> 
+
+## Question 1
+
+**Part 1**:
+
+First, we plot the two time series:
+
+```{r plot}
+df3 <- readr::read_csv("./data/data_assign_p3.csv")
+
+twostocks <- c("apple", "netflix")
+
+df3_twostocks <- df3 %>%
+    janitor::clean_names() %>%
+    pivot_longer(-date) %>%
+    filter(is.element(name, twostocks)) %>%
+    mutate(date = lubridate::dmy(date)) 
+
+df3_twostocks %>%
+    ggplot(aes(x = date, y = value, 
+               group = name, color = name)) + geom_line()
+```
+
+Then, we show the acf and pacf-functions:
+
+```{r autocor}
+
+n1 <- df3$NETFLIX %>%
+    acf(lag.max = 12, plot = F)
+
+n2 <- df3$NETFLIX %>%
+    pacf(lag.max = 12, plot = F)
+
+a1 <- df3$APPLE %>%
+    acf(lag.max = 12, plot = F)
+
+a2 <- df3$APPLE %>%
+    pacf(lag.max = 12, plot = F)
+
+par(mfrow=c(2,2))
+
+plot(n1, main = "Netflix");plot(n2, main = "Netflix")
+plot(a1, main = "Apple"); plot(a2, main = "Apple")
+     
+```
+
+The ACF's tell us that the stock price is highly dependent on the past stock price, and this dependence decays only very slowly: even the 50 or 100-period lag still shows significant autocorrelation. 
+
+\clearpage
+
+**Part 2**
+
+We now implement a general to specific unit root test function:
+
+```{r g2s function}
+unit_root_test <- function(column, order){
+  
+  # Make the dataset
+  series <- ts(column) 
+  first_differences <- diff(series, differences = 1)
+  laggedvar <- stats::lag(series, -1)
+  
+  #other lagged first differences, delta x_{t-1}, .., delta x_{t-p+1}
+  lagged_fds <- list()
+  
+  for(i in 1:(order-1)){
+    
+    lagged_fds[[i]] <- stats::lag(first_differences, k = -i)
+    
+  }
+  
+  df <- cbind(first_differences, laggedvar, purrr::reduce(lagged_fds, cbind)) %>%
+    as_tibble()
+ 
+  colnames(df) <- c("dxt", "xtm1", paste("dxtm", 1:(order-1), sep = ""))
+  
+  df <- df %>%
+    na.omit()
+  
+  # run the stepwise regression - find the best model
+  null = lm(data = df, formula = "dxt ~ xtm1")
+  full = lm(data = df, formula = paste("dxt ~ xtm1 +", 
+                                       paste(paste("dxtm", 1:(order-1), sep = ""), 
+                                             collapse = ' + '),
+                                       collapse = " ")
+  )
+  
+  bestmodel <- step(full,
+       scope = list(lower = null, upper = full),
+       direction = "backward",
+       criterion = "BIC",
+       k = log(nrow(df)))
+  
+  # perform the unit root test (MacKinnon, 2010)
+  b_critical <- -1.6156
+  
+  t_value <- bestmodel %>%
+    summary() %>%
+    .$coefficients %>%
+    .[,3] %>%
+    .["xtm1"]
+  
+  significant = abs(t_value) > abs(b_critical)
+    
+  data.frame(stock = deparse(substitute(column)),
+             best_model = as.character(bestmodel$call[2]), 
+             t_value = t_value, 
+             sig = significant)
+}
+
+
+```
+
+
+```{r, message = FALSE, warning = FALSE, results = "hide"}
+summary_tests <- list()
+
+for(i in 1:length(colnames(df3[,-1]))){
+  df <- unit_root_test(df3[, i+1], 12)
+  summary_tests[[i]] <- df %>%
+    mutate(name = colnames(df3[,-1][i]))
+}
+
+summary_tests <- summary_tests %>%
+  purrr::reduce(rbind) %>%
+  select(-stock) 
+
+rownames(summary_tests) <- NULL
+```
+
+```{r table}
+knitr::kable(summary_tests)
+```
+
+The test seems to be significant for a number of stocks, indicating that for these stocks, the null hypothesis of a unit root is rejected in favor of stationarity. With a 10% $\alpha$-level, we expect to see a type I-error (rejecting the null while it is true) about one tenth of the time for every test. This means that the probability of having at least 1 type-I error is very large: $(1 - 0.9^{10})$ = `r 1-0.9^10`. It would be better to use some kind of Bonferroni correction to correct for these compounding type I-errors, but alternatively, we could also lower the $\alpha$-level. 
+
+**Part 3**
+
