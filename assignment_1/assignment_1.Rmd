@@ -363,12 +363,45 @@ plot(ts(start = c(1987, 2),
 
 
 # Predicted Values:
-ts(start = c(1987, 2), 
+predicted_values <- ts(start = c(1987, 2), 
         frequency = 4, 
         forecast_gdp(8, ar, df2[,1])
    ) %>%
+  .[(length(.)-7):length(.)]
+
+predicted_values
+```
+
+Then, we predict the unemployment rate using the data and the predictions for the GDP-rate:
+
+```{r}
+gdp_lastvalue_plus_forecast <- ts(start = c(1987, 2), 
+        frequency = 4, 
+        forecast_gdp(8, ar, df2[,1])
+) %>%
   .[(length(.)-8):length(.)]
 
+
+forecast_unmp <- function(no_periods, df){
+  
+  coefficients <- adl$coefficients
+  
+   for(i in 1:no_periods){
+     
+    prediction <- coefficients[1] + 
+      coefficients[2] * df[length(df)] + 
+      coefficients[3] * df[length(df) - 2] +
+      coefficients[4] * gdp_lastvalue_plus_forecast[i]
+    
+    df <- c(df, unname(prediction))
+    
+   }
+  
+  df
+  
+}
+
+forecast_unmp(8, df2[,2])[109:116]
 ```
 
 
