@@ -45,7 +45,6 @@ knitr::include_graphics("./plot.jpeg")
 ```
 
 ```{r plotgdp}
-# Part 1: Plot the Dutch GDP, ACF, and PACF
 df <- readr::read_csv("./data/data_assign_p1.csv")
 
 df <- ts(df$GDP_QGR, 
@@ -88,7 +87,7 @@ stargazer(ar4, ar3, ar2, ar1,
 
 ```
 
-The table below shows us the coefficients of the $AR(p)$ models with 1 to 4 lags included. Using a general-to-specific approach, we eliminate insignificant lags ($\alpha = 0.05$ level) at each step. Column (1) shows that only the first lag is significant at the 0.1 level. The second lag has the lowest $\psi$ coefficient and the highest s.e., thus, we eliminate it first. Doing this iteratively, we are left with the first lag in the model which is significant at the 0.05 level. Investigating the coefficient, we observe there is a 1-period persistence of the time series on its lagged value. The _degree_ of persistence, however, is not large, as the magnitude of the coefficient is fairly small (0.26). 
+The table below shows us the coefficients of the $AR(p)$ models with 1 to 4 lags included. Using a general-to-specific approach, we eliminate insignificant lags ($\alpha = 0.05$ level) at each step. Column (1) shows that only the first lag is significant at the 0.1 level. The second lag has the lowest $\phi$ coefficient and the highest s.e., thus, we eliminate it first. Doing this iteratively, we are left with the first lag in the model which is significant at the 0.05 level. Investigating the coefficient, we observe there is a 1-period persistence of the time series on its lagged value. The _degree_ of persistence, however, is not large, as the magnitude of the coefficient is fairly small (0.27). 
 
 **Part 3**
 
@@ -128,7 +127,6 @@ dev.off()
 **Part 4**
 
 ```{r}
-# Part 4: Forecast AR model for 2 years
 df_pred <- predict(ar1_m, n.ahead = 8)$pred
 ```
 
@@ -137,16 +135,17 @@ We derived the forecasts by making use of the conditional expectation as the for
 $$
 \mathbb{E}[X_{T+j}] = \alpha + \alpha \cdot \left( \sum_{i = 1}^{j-1} \phi^i \right) + \phi^j X_T
 $$
+The predicted values can be found below:
+```{r}
+df_pred
+```
+
 
 **Part 5**
 
 We construct the forecasts using a 95% symmetric confidence interval around the forecast. 
 
 ```{r}
-# Part 5: Produce CI
-phi <- ar1_m$coef[1]
-sigma <- sqrt(ar1_m$sigma2)
-
 df_ciu <- predict(ar1_m, n.ahead = 8)$pred + predict(ar1_m, n.ahead = 8)$se*1.96
 df_cil <- predict(ar1_m, n.ahead = 8)$pred - predict(ar1_m, n.ahead = 8)$se*1.96
 ```
@@ -293,7 +292,7 @@ tsm <- coef(adl)[2] * coef(adl)[4]
 lrm <- coef(adl)[4]/(1 - coef(adl)[2] - coef(adl)[3])
 ```
 
-First, since there is no contemporaneous $X_t$, the short-run multiplier is equal to zero. Secondly, the one-step ahead multiplier can be easily obtained by observing that $Y_t$ is still at the same value, and the shock enters the process only at $t+1$: hence, the 1-step multiplier is equal to $\theta_1$ = `r osm`. The two-step multiplier has to take into account that now $Y^*_{t+1}$ is different from $Y_{t+1}$, but there is no influence from the AR-process at $X_{t+1}$, so that the two-step multiplier is $\phi_1 \theta_1 $ = `r tsm`. 
+First, since there is no contemporaneous $X_t$, the short-run multiplier is equal to zero. Secondly, the one-step ahead multiplier can be easily obtained by observing that $Y_t$ is still at the same value, and the shock enters the process only at $t+1$: hence, the 1-step multiplier is equal to $\theta_1$ = `r osm`. The two-step multiplier has to take into account that now $Y^*_{t+1}$ is different from $Y_{t+1}$, but there is no influence from the AR-process at $X_{t+1}$, so that the two-step multiplier is $\phi_1 \theta_1$ = `r tsm`. 
 
 The long-run multiplier is derived by setting $Y_t = \bar{Y}$ and $X_t = \bar{X}$ for all $t$. Solving this and looking at the coefficient of $\Delta X = 0$ leads to the long-run multiplier: `r lrm`. The long-run relation is given by:
 
@@ -310,11 +309,11 @@ $\bar{Y} =$ `r constant` + `r lrm` $\cdot \bar{X}$.
 
 **Part 3 **
 
-Assuming strict exogeneity, we can interpret the coefficient estimates as being causal, in which case, taking $\delta X = 1$, we see that the long-run multiplier $\bar{Y} = \frac{\theta_1}{1-\phi_1 - \phi_2} < 0$, which means that indeed an increase in the GDP growth rate causes a decrease in the unemployment rate of about 4 percentage points. However, it also seems plausible there is an simultaneous relationship between GDP and Unemployment, or perhaps both of them are shaped by more fundamental parameters. In this case, the coefficients do not warrant a causal explanation, and there is only a negative _correlation_ between GDP growth and unemployment. 
+Assuming strict exogeneity, we can interpret the coefficient estimates as being causal, in which case, taking $\delta X = 1$, we see that the long-run multiplier $\bar{Y} = \frac{\theta_1}{1-\phi_1 - \phi_2} < 0$, which means that indeed an increase in the GDP growth rate causes a decrease in the unemployment rate of `r lrm`. However, it also seems plausible there is an simultaneous relationship between GDP and Unemployment, or perhaps both of them are shaped by more fundamental parameters. In this case, the coefficients do not warrant a causal explanation, and there is only a negative _correlation_ between GDP growth and unemployment. 
 
 **Part 4 **
 
-We know that the distribution of $Y_t | Y_{t-1} \sim N(\alpha + \phi_1 Y_{t-1} + \phi_3 Y_{t-3} + \gamma X_{t-1}, \sigma^2)$. Shifting everything by one period, we obtain that the distribution of $Y_{t+1}$ conditional on the realized values of $Y_t$ is:
+We know that the distribution of $Y_t | Y_{t-1} \sim N(\alpha + \phi_1 Y_{t-1} + \phi_3 Y_{t-3} + \theta X_{t-1}, \sigma^2)$. Shifting everything by one period, we obtain that the distribution of $Y_{t+1}$ conditional on the realized values of $Y_t$ is:
 
 $$
 Y_{t+1} | Y_t \sim N(\alpha + \phi_1 Y_t + \phi_3 Y_{t-2} + \gamma_1 X_t, \sigma^2)
@@ -341,7 +340,6 @@ So that the probability of unemployment being over 7.8% is: `r 1-pnorm((7.8 - mu
 First, we produce an 8-quarter forecast for the AR-process underlying GDP growth:
 
 ```{r}
-#input dataframe with one column
 forecast_gdp <- function(no_periods, model, df){
 
   coefficients <- model$coefficients
