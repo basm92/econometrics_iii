@@ -36,7 +36,7 @@ library(AER)
 
 <!-- I created a file .Renviron, where the python distribution is located on my system. You can find that by opening a terminal, and entering `$ which -a python python3`. Then, in RStudio, use `usethis::edit_r_environ()`, and add `RETICULATE_PYTHON="/Users/basmachielsen/opt/anaconda3/bin/python"` (or your directory) on a new line to the file. In this way, we can seamlessly interchange R and Python code chunks. Restart RStudio, and then everything is ready to go: --> 
 
-## Question 1
+## Question 3
 
 **Part 1**:
 
@@ -414,7 +414,9 @@ Now, we implement the general-to-specific procedure in R. First, we estimate the
 
 ```{r}
 zt <- lm(data = py$data_ecm,
-   formula = yt ~ xt)$residuals
+   formula = yt ~ xt)
+
+residuals <- zt$residuals
 
 ztm1 <- lag(residuals, 1)
 ```
@@ -431,9 +433,9 @@ indep_vars <- py$data_ecm %>%
 
 indep_vars <- indep_vars[grepl("dxt|dyt", indep_vars)]
 
-longformula <- paste("fdy ~ ztm1 +", paste(indep_vars, collapse = " + "))
+longformula <- paste("fdy ~ ztm1 + 0 +", paste(indep_vars, collapse = " + "))
 # run the stepwise regression - find the best model
-null = lm(data = data_ecm, formula = "fdy ~ ztm1")
+null = lm(data = data_ecm, formula = "fdy ~ ztm1 + 0")
 full = lm(data = data_ecm, formula = longformula)
   
 bestmodel <- step(full,
@@ -451,7 +453,27 @@ stargazer(bestmodel, header = F,
           omit.stat = c("adj.rsq", "ser", "f"))
 ```
 
-Report and interpret the short-run andlong-run multipliers.  Report and interpret the error correction coefficient.
+_Report and interpret the short-run and long-run multipliers.  Report and interpret the error correction coefficient._
 
-Lecture 4, slide 78 and onward: error correction model interpretation
-6.  How strong is the correction to equilibrium?  Is there over-shooting?  Do you find evidence of Granger causality?  Justify your answer.
+<!-- Lecture 4, slide 78 and onward: error correction model interpretation -->
+
+The error correction coefficient $\gamma$ = `r bestmodel$coefficients[1]` means that if consumption and income are away from their long-run relationship, there is a correction towards the equilibrium value. For example, if there is a positive residual, meaning consumption is too high relative to the income at a given point in time, in the next period, we tend to observe a _decrease_ in consumption to correct for that. 
+
+The short-run multipliers can be derived from the coefficients belonging to $\Delta X_t$ and $\Delta Y_{t-3}$. An (positive) exogenous shock in income causes an increase in consumption (0.19), and the effects of that shock also appear three periods later $\Delta Y_{t-3}$. 
+
+The long-run multipliers can be derived from the equilibrium relationship in the "first-stage" regression:
+
+$\bar{Y} =$  `r zt$coefficients[1]` + `r zt$coefficients[2]` $\cdot \bar{X}$.  
+
+This indicates that people tend to consume a proportion of 66% of their long-run equilibrium income, plus a fixed amount of `r zt$coefficients[1]`, which can (kind of) be interpreted as the cost of living (even if the long-run equilibrium income is 0, they theoretically consume this amount). 
+
+_6.  How strong is the correction to equilibrium?  Is there over-shooting?_
+
+The error correction coefficient $\gamma$ = `r bestmodel$coefficients[1]` is very close to zero. Hence, there is no overshooting $\gamma < -1$, and only a partial error correction. The error correction is also quite slow, indicated by the low magnitude of the coefficient. 
+
+_Do you find evidence of Granger causality?  Justify your answer._
+
+Lecture 6 lecture slides
+
+## Question 5
+
