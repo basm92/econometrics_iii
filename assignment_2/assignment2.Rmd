@@ -90,7 +90,7 @@ The ACF's tell us that the stock price is highly dependent on the past stock pri
 We now implement a general to specific unit root test function:
 
 ```{r g2s function}
-unit_root_test <- function(column, order){
+unit_root_test <- function(column, order, critical_value){
   
   # Make the dataset
   series <- ts(column) 
@@ -129,7 +129,7 @@ unit_root_test <- function(column, order){
        k = log(nrow(df)))
   
   # perform the unit root test (MacKinnon, 2010)
-  b_critical <- -1.6156
+  b_critical <- critical_value
   
   t_value <- bestmodel %>%
     summary() %>%
@@ -153,7 +153,7 @@ unit_root_test <- function(column, order){
 summary_tests <- list()
 
 for(i in 1:length(colnames(df3[,-1]))){
-  df <- unit_root_test(df3[, i+1], 12)
+  df <- unit_root_test(df3[, i+1], 12, -1.6156)
   summary_tests[[i]] <- df %>%
     mutate(name = colnames(df3[,-1][i]))
 }
@@ -278,4 +278,82 @@ plot(inc_acf);plot(inc_pcf);plot(cons_acf);plot(cons_pcf)
 
 ```
 
-We observe that in both cases, the autocorrelation function shows extremely high estimates for each subsequent lag: even for a large number of periods, there is still a large degree of autocorrelation in the data. The partial autocorrelations, however, show a completely different view: there is no partial autocorrelation when controlled for other influences. This means that there is a lot of dependence in the series unconditionally, but conditionally on previous values, there seems to be no correlation. 
+We observe that in both cases, the autocorrelation function shows extremely high estimates for each subsequent lag: even for a large number of periods, there is still a large degree of autocorrelation in the data. The partial autocorrelations, however, show a completely different view: there is no partial autocorrelation when controlled for other influences. This means that there is a lot of dependence in the series unconditionally, but conditionally on previous values, there seems to be no correlation. This behavior seems to be consistent with random walk behavior. 
+
+**Part 2**
+
+We use the same function as in the previous question to find the best model (according to BIC), and compute the t-value and conduct a Dickey-Fuller test:
+
+```{r hallohoegaathet, results='hide'}
+
+urcons <- unit_root_test(df4$CONS, order = 12, -1.9393)
+urinc <- unit_root_test(df4$INC, order = 12, -1.9393)
+
+unitroots <- rbind(urcons, urinc) %>%
+  mutate(stock = str_replace(stock, "df4\\$", ""))
+
+rownames(unitroots) <- NULL
+
+```
+
+```{r table2}
+knitr::kable(unitroots)
+```
+
+As we can see in the table, the unit root hypothesis is not rejected at a 5% level in both cases. 
+
+**Part 3**
+
+Now, we perform a unit root test on the first differences of both series:
+
+```{r heehallo, results='hide'}
+urcons2 <- unit_root_test(diff(df4$CONS), order = 12, -1.9393)
+urinc2 <- unit_root_test(diff(df4$INC), order = 12, -1.9393)
+
+unitroots2 <- rbind(urcons2, urinc2) %>%
+  mutate(stock = str_replace(stock, "df4\\$", ""))
+
+rownames(unitroots2) <- NULL
+```
+
+```{r een_mooi_tabelletje}
+knitr::kable(unitroots2)
+```
+
+Now, we see that both hypotheses are rejected! We conclude that both of these series are integrated at order $I(1)$, because the hypothesis of a unit root in the first differences is rejected. 
+
+**Part 4**
+
+Assuming both series are I(1), test for cointegration betweenconsumptionandincomebyregressingconsumptiononincomeand performing a unit-root test on the residuals.  Reportthe  estimated  regression  coefficients.  
+
+Plot  the  regression  residuals.   Use  the  SchwartzInformation Criterion (SIC) to determine the number of ADF lags in your unit-root residualtest.  Report the cointegration test statistic.  Do you reject cointegration?
+
+```{r henk}
+
+consincreg <- lm(data = df4, 
+   formula = CONS ~ INC)
+
+consincreg %>%
+  stargazer(header = F, 
+            omit.stat = c("adj.rsq", "ser", "f"))
+```
+
+
+
+```{r cointegration, results='hide'}
+
+unit_root_test(consincreg$residuals, 
+               order = 12, 
+               -1.6156)
+
+```
+
+We observe that the hypothesis of a unit root in the residuals is rejected, indicating that the two series are cointegrated: $Cons, Inc \sim CI(1,1)$. 
+
+**Part 5**
+
+As the series are cointegrated, we can estimate an error correction model, incorporate long-run equilibrium information as well as short-run dynamics. The error-correction model is of the following general form:
+
+$$
+
+$$
