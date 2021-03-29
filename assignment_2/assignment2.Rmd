@@ -357,3 +357,38 @@ As the series are cointegrated, we can estimate an error correction model, incor
 $$
 
 $$
+
+We now implement this in Python:
+
+```{python}
+import pandas as pd 
+ 
+q = 11
+# p for dep var, q for indep var
+def generate_datamatrix(p, q, y, x):
+  # dependent variable
+  fdy = r.df4[str(y)] - r.df4[str(y)].shift(1)
+  #ytm1
+  ymt1 = r.df4[str(y)].shift(1)
+  #xtm1
+  xt1 = r.df4[str(x)].shift(1)
+  
+  # x first differences
+  d = {}
+  d['dxtm0'] = r.df4[str(x)] - r.df4[str(x)].shift(1))
+  # lagged first differences
+  for i in range(1, q+1):
+    d['dxtm{0}'.format(i)] = dxtm0.shift(i)
+  
+  # y first differences
+  e = {}
+  for j in range(1, p+1):
+    e['dxtm{0}'.format(j)] = fdy.shift(j)
+    
+  # put everything in a dataframe
+  
+```
+
+```{r}
+py$hoi
+```
