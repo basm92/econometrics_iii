@@ -160,7 +160,7 @@ for(i in 1:length(colnames(df3[,-1]))){
 
 summary_tests <- summary_tests %>%
   purrr::reduce(rbind) %>%
-  select(-stock) 
+  select(-stock)
 
 rownames(summary_tests) <- NULL
 ```
@@ -185,5 +185,97 @@ Generalizing this pattern, we can see that $\text{Var}(P_{t+h}) = h \cdot \sigma
 
 ```{r}
 #forecast code
+p_tplush <- df3 %>%
+  slice_tail(n=1) %>%
+  select(c("APPLE", "MICROSOFT")) 
+
+var_apple <- lm(data = df3 %>%
+     select("APPLE"), 
+   formula = APPLE ~ lag(APPLE, 1)) %>%
+  .$residuals %>%
+  var()
+
+var_microsoft <- lm(data = df3 %>%
+     select("MICROSOFT"), 
+   formula = MICROSOFT ~ lag(MICROSOFT, 1)) %>%
+  .$residuals %>%
+  var()
+
+forecasts_apple <- data.frame(time = 1:5, 
+                              value = rep(p_tplush %>%
+                                            pull(1), 5),
+                              var = var_apple * 1:5)
+
+forecasts_microsoft <- data.frame(time = 1:5, 
+                                  value = rep(p_tplush %>%
+                                               pull(2), 5),
+                                  var = var_microsoft * 1:5)
+
+forecasts_apple %>%
+  ggplot(aes(x = time)) + 
+  geom_line(aes(y = value)) +
+  geom_line(aes(y = value + 1.96*sqrt(var)), lty = "dashed") +
+  geom_line(aes(y = value - 1.96*sqrt(var)), lty = "dashed")
+
+forecasts_microsoft %>%
+  ggplot(aes(x = time)) + 
+  geom_line(aes(y = value)) +
+  geom_line(aes(y = value + 1.96*sqrt(var)), lty = "dashed") +
+  geom_line(aes(y = value - 1.96*sqrt(var)), lty = "dashed")
+
 ```
 
+Hence, there is no investment advice that we can give: the value is predicted to remain constant, and for all predictions, the probability of an increase in stock price equals the probability of a decrease in stock price. The expected value of any investment strategy is 0, and the value is neither expected to increase, nor to decrease. 
+
+**Part 4**
+
+_Do  you  find  a  statistically  significant  contemporaneous  relation  between  Microsoft  and Exxon  Mobile  stock  prices?_
+
+```{r, results='asis'}
+lm(df3, formula = MICROSOFT ~ EXXON_MOBIL) %>%
+  stargazer(header = F, omit.stat = c("adj.rsq", "ser", "f"))
+
+```
+
+_Do  you  agree  that  changes  in  Microsoft  stock  prices  are largely explained by fluctuations in the stock price of Exxon Mobile?_
+
+We do not agree that changes in Microsoft stock prices are largely explained by fluctuations in the stock price of Exxon Mobile. It is likely that these results are driven by a shared stochastic trend in both of variables, in other words, the variables might be cointegrated. It can be shown that if two variables share a stochastic trend, the t-value of the estimated coefficient tends to infinity, and the probability of obtaining statistical significance to 1, even under the assumption of completely unrelated trends. 
+
+## Question 4
+
+**Part 1**
+
+```{r}
+df4 <- read_csv("data/data_assign_p4.csv")
+
+df4$obs <- ts(df4$obs, 
+              frequency = 4,
+              start = c(1988, 1))
+
+p_cons <- ggplot(data = df4, aes(x = as.Date(obs), y = CONS)) + 
+  geom_line() + 
+  scale_x_date(date_labels = "%b %Y")
+
+p_inc <- ggplot(data = df4, aes(x = as.Date(obs), y = INC)) + 
+  geom_line() + 
+  scale_x_date(date_labels = "%b %Y")
+
+cowplot::plot_grid(p_cons, p_inc)
+
+inc <- ts(df4$INC,
+   frequency = 4,
+   start = c(1988, 1)) 
+
+cons <- ts(df4$CONS,
+   frequency = 4,
+   start = c(1988, 1)) 
+
+inc_acf <- acf(inc, plot = F); inc_pcf <- pacf(inc, plot = F)
+cons_acf <- acf(cons, plot = F); cons_pcf <- pacf(cons, plot = F)
+
+par(mfrow=c(2,2))
+plot(inc_acf);plot(inc_pcf);plot(cons_acf);plot(cons_pcf)
+
+```
+
+We observe that in both cases, the autocorrelation function shows extremely high estimates for each subsequent lag: even for a large number of periods, there is still a large degree of autocorrelation in the data. The partial autocorrelations, however, show a completely different view: there is no partial autocorrelation when controlled for other influences. This means that there is a lot of dependence in the series unconditionally, but conditionally on previous values, there seems to be no correlation. 
