@@ -328,7 +328,7 @@ Assuming both series are I(1), test for cointegration betweenconsumptionandincom
 
 Plot  the  regression  residuals.   Use  the  SchwartzInformation Criterion (SIC) to determine the number of ADF lags in your unit-root residualtest.  Report the cointegration test statistic.  Do you reject cointegration?
 
-```{r henk}
+```{r, results='asis'}
 
 consincreg <- lm(data = df4, 
    formula = CONS ~ INC)
@@ -342,10 +342,15 @@ consincreg %>%
 
 ```{r cointegration, results='hide'}
 
-unit_root_test(consincreg$residuals, 
+urt2 <- unit_root_test(consincreg$residuals, 
                order = 12, 
                -1.6156)
 
+rownames(urt2) <- NULL
+```
+
+```{r}
+knitr::kable(urt2)
 ```
 
 We observe that the hypothesis of a unit root in the residuals is rejected, indicating that the two series are cointegrated: $Cons, Inc \sim CI(1,1)$. 
@@ -354,41 +359,99 @@ We observe that the hypothesis of a unit root in the residuals is rejected, indi
 
 As the series are cointegrated, we can estimate an error correction model, incorporate long-run equilibrium information as well as short-run dynamics. The error-correction model is of the following general form:
 
-$$
+\begin{align*}
+\Delta Y_t = \alpha - \gamma \bar{Z}_{t-1} + \phi_1 \Delta Y_{t-1} + \dots + \phi_p \Delta Y_{t-p} + \\
+\beta_0 \Delta X_{t} + \dots + \beta_q \Delta X_{t-q} + u_t
+\end{align*}
 
-$$
-
-We now implement this in Python:
+We first construct the necessary data matrix in Python:
 
 ```{python}
 import pandas as pd 
- 
-q = 11
+
 # p for dep var, q for indep var
 def generate_datamatrix(p, q, y, x):
   # dependent variable
   fdy = r.df4[str(y)] - r.df4[str(y)].shift(1)
   #ytm1
-  ymt1 = r.df4[str(y)].shift(1)
+  ytm1 = r.df4[str(y)].shift(1)
   #xtm1
-  xt1 = r.df4[str(x)].shift(1)
+  xtm1 = r.df4[str(x)].shift(1)
   
-  # x first differences
   d = {}
-  d['dxtm0'] = r.df4[str(x)] - r.df4[str(x)].shift(1))
+  
+  d['xt'] = r.df4[str(x)]
+  d['xtm1'] = xtm1
+  # x first differences
+  d['dxtm0'] = r.df4[str(x)] - r.df4[str(x)].shift(1)
   # lagged first differences
   for i in range(1, q+1):
-    d['dxtm{0}'.format(i)] = dxtm0.shift(i)
+    d['dxtm{0}'.format(i)] = d['dxtm0'].shift(i)
   
   # y first differences
   e = {}
+  
+  e['yt'] = r.df4[str(y)]
+  e['fdy'] = fdy
+  e['ytm1'] = ytm1
+  
   for j in range(1, p+1):
-    e['dxtm{0}'.format(j)] = fdy.shift(j)
+    e['dytm{0}'.format(j)] = e['fdy'].shift(j)
     
   # put everything in a dataframe
+  dfx = pd.DataFrame.from_dict(d)
+  dfy = pd.DataFrame.from_dict(e)
   
+  df_out = pd.concat([dfx.reset_index(drop=True), dfy], axis=1)
+  
+  return df_out
+
+data_ecm = generate_datamatrix(4, 4, 'CONS', 'INC')
+
 ```
 
+Now, we implement the general-to-specific procedure in R. First, we estimate the residuals $\bar{Z}_t$, and compute $\bar{Z}_{t-1}$ which we then lag to add as a predictor in the general-to-specific procedure. 
+
 ```{r}
-py$hoi
+zt <- lm(data = py$data_ecm,
+   formula = yt ~ xt)$residuals
+
+ztm1 <- lag(residuals, 1)
 ```
+
+Now, we add $\bar{Z}_{t-1}$ to the dataset, and formulate the g2s procedure (again according to the BIC):
+
+```{r, results="hide"}
+data_ecm <- py$data_ecm %>%
+  mutate(ztm1 = ztm1) %>%
+  na.omit()
+
+indep_vars <- py$data_ecm %>%
+  colnames()
+
+indep_vars <- indep_vars[grepl("dxt|dyt", indep_vars)]
+
+longformula <- paste("fdy ~ ztm1 +", paste(indep_vars, collapse = " + "))
+# run the stepwise regression - find the best model
+null = lm(data = data_ecm, formula = "fdy ~ ztm1")
+full = lm(data = data_ecm, formula = longformula)
+  
+bestmodel <- step(full,
+       scope = list(lower = null, upper = full),
+       direction = "backward",
+       criterion = "BIC",
+       k = log(nrow(data_ecm)))
+```
+
+Starting with $p = q = 4$, we get the following model:
+
+```{r, results='asis'}
+
+stargazer(bestmodel, header = F,
+          omit.stat = c("adj.rsq", "ser", "f"))
+```
+
+Report and interpret the short-run andlong-run multipliers.  Report and interpret the error correction coefficient.
+
+Lecture 4, slide 78 and onward: error correction model interpretation
+6.  How strong is the correction to equilibrium?  Is there over-shooting?  Do you find evidence of Granger causality?  Justify your answer.
