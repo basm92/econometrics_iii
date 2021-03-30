@@ -525,4 +525,28 @@ plt.plot(coviddixneuf['Date'], coviddixneuf['New Cases'])
 plt.title("Covid Cases over Time (America)")
 ```
 
-We observe that both the mean and the variance tend to vary over time. 
+We observe that both the mean and the variance tend to vary over time. This means we cannot use models of the ARMA(p,q) class to model the process, because, whereas the conditional mean changes over time and can thus accommodate the characteristics of this process, the variance does not. To model this behavior, we might resort to the GARCH-class of models. These models can be applied to stationary data series, and fit an ARMA model with conditional heteroskedasticity. 
+
+```{r}
+library(fGarch)
+
+covid19 <- py$coviddixneuf %>%
+  janitor::clean_names() %>%
+  arrange(date)
+
+garchmodel <- fGarch::garchFit(formula = ~ arma(2, 1) + garch(1,1), 
+                               data = covid19$new_cases,
+                               trace = F)
+
+eval <- data.frame(date = covid19$date[1:length(covid19$date)], 
+                   actual = covid19$new_cases, 
+                   fitted = garchmodel@fitted)
+
+# first differences
+eval %>%
+  pivot_longer(c(actual, fitted)) %>%
+  ggplot(aes(x = date, y = value, group = name, color = name)) + geom_line()
+
+test <- predict(garchmodel, n.ahead = 300)
+```
+
