@@ -50,7 +50,7 @@ twostocks <- c("apple", "netflix")
 df3_twostocks <- df3 %>%
     janitor::clean_names() %>%
     pivot_longer(-date) %>%
-    filter(is.element(name, twostocks)) %>%
+    dplyr::filter(is.element(name, twostocks)) %>%
     mutate(date = lubridate::dmy(date)) 
 
 df3_twostocks %>%
@@ -126,7 +126,8 @@ unit_root_test <- function(column, order, critical_value){
        scope = list(lower = null, upper = full),
        direction = "backward",
        criterion = "BIC",
-       k = log(nrow(df)))
+       k = log(nrow(df)),
+       trace = 0)
   
   # perform the unit root test (MacKinnon, 2010)
   b_critical <- critical_value
@@ -456,7 +457,7 @@ _Report and interpret the short-run and long-run multipliers.  Report and interp
 
 The error correction coefficient $\gamma$ = `r bestmodel$coefficients[1]` means that if consumption and income are away from their long-run relationship, there is a correction towards the equilibrium value. For example, if there is a positive residual, meaning consumption is too high relative to the income at a given point in time, in the next period, we tend to observe a _decrease_ in consumption to correct for that. 
 
-The short-run multipliers can be derived from the coefficients belonging to $\Delta X_t$ and $\Delta Y_{t-3}$. An (positive) exogenous shock in income causes an increase in consumption (0.19), and the effects of that shock also appear three periods later $\Delta Y_{t-3}$. 
+The short-run multipliers can be derived from the coefficient belonging to $\Delta X_t$. An (positive) exogenous shock in income causes an increase in consumption (0.20). The effects of that shock also appear three periods later (reflected by the coefficient on $\Delta Y_{t-3}$). 
 
 The long-run multipliers can be derived from the equilibrium relationship in the "first-stage" regression:
 
@@ -513,6 +514,7 @@ First, we import and plot the data:
 
 ```{python}
 import dateutil
+import pandas as pd
 import matplotlib.pyplot as plt
 
 coviddixneuf = pd.read_csv("./data/data_assign_p5.csv", skiprows=2)
@@ -520,30 +522,110 @@ coviddixneuf['Date'] = coviddixneuf['Date'].apply(dateutil.parser.parse, dayfirs
 
 plt.plot(coviddixneuf['Date'], coviddixneuf['New Cases'])
 plt.title("Covid Cases over Time (America)")
+
 ```
 
-We observe that both the mean and the variance tend to vary over time. This means we cannot use models of the ARMA(p,q) class to model the process, because, whereas the conditional mean changes over time and can thus accommodate the characteristics of this process, the variance does not. To model this behavior, we might resort to the GARCH-class of models. These models can be applied to stationary data series, and fit an ARMA model with conditional heteroskedasticity. 
+We observe that both the mean and the variance tend to vary over time. This means we cannot use models of the ARMA(p,q) class to model the process, because the data is non-stationary. We formally test for this in the following code chunk, using the function unit_root_test from question 4. 
 
 ```{r}
-library(fGarch)
-
+# Unit root test showing the data is non-stationary and the first differences are stationary
 covid19 <- py$coviddixneuf %>%
   janitor::clean_names() %>%
-  arrange(date)
+  arrange(date) %>%
+  mutate(diffcases = c(NA, diff(new_cases)))
 
-garchmodel <- fGarch::garchFit(formula = ~ arma(2, 1) + garch(1,1), 
-                               data = covid19$new_cases,
-                               trace = F)
+unit_root_test(covid19$new_cases, 4, 2.0) %>%
+  knitr::kable()
 
-eval <- data.frame(date = covid19$date[1:length(covid19$date)], 
-                   actual = covid19$new_cases, 
-                   fitted = garchmodel@fitted)
+unit_root_test(covid19$diffcases, 4, 2.0) %>%
+  knitr::kable()
+```
 
-# first differences
-eval %>%
+We observe that the first differences are stationary. Hence, we can use a regular ARMA process on the first differences. However, the ARMA-class of models assumes a constant error variance, whereas in the plot, we can observe that the variance is non-constant. To model this behavior, we might resort to the GARCH-class of models. From a [lemma based on stack overflow](https://stats.stackexchange.com/questions/292680/volatility-of-original-vs-first-differenced-series-in-arimagarch-in-r), we know that the conditional variance of a first-differenced series $\Delta X_t$ is equal to the conditional variance of the original series $X_t$. Hence, we can use the original data to generate the variance and standard errors corresponding to our predictions (point estimates) made by the AR(I)MA class of models. Hence, in the end, we deliver predictions that can be applied to original, levels, i.e. the non-stationary data series, and predict New Cases, rather than predicting first differences. 
+
+Hence, first, we estimate an Arima model on the first-differences data, using the AIC-criterion to go from general to specific models. Then, we convert back the estimates to compute the in-sample fit, and visually assess in-sample accuracy:
+
+```{r}
+arimamodel <- forecast::Arima(covid19$new_cases, order = c(4, 1, 1),
+                              include.constant = FALSE)
+
+evalarima <- data.frame(date = covid19$date,
+                    actual = covid19$new_cases,
+                    fitted = fitted(arimamodel))
+
+evalarima %>%
   pivot_longer(c(actual, fitted)) %>%
   ggplot(aes(x = date, y = value, group = name, color = name)) + geom_line()
 
-test <- predict(garchmodel, n.ahead = 300)
 ```
 
+We predict the values for the Arima model:
+
+```{r}
+how_many_days_predict <- 14
+
+predictions <- predict(arimamodel, how_many_days_predict)$pred
+```
+
+Then, we estimate a Garch model to find an estimate of the conditional variances: 
+
+```{r}
+library(fGarch)
+# Same order as optimal model
+garchmodel <- fGarch::garchFit(formula = ~ arma(4,1) + garch(1,1), 
+                               data = covid19$new_cases %>%
+                                 na.omit(),
+                               trace = F)
+```
+
+We use the Garch model to compute $\sigma_t$ for the predictions: 
+
+```{r}
+# Calculate predicted sigma_t's for the next X periods
+omega <- garchmodel@fit$params$params['omega']
+alpha1 <- garchmodel@fit$params$params['alpha1']
+beta1 <- garchmodel@fit$params$params['beta1']
+
+create_sigma_t <- function(alpha, beta, omega, predict_periods){
+  
+  sigma_t = vector(length = predict_periods)
+  
+  for(i in 1:predict_periods){
+    
+    if(i == 1){
+      
+      sigma_t[i] <- sqrt(beta * garchmodel@sigma.t[400]^2+ alpha * garchmodel@data[400]^2 + omega)
+      
+    } else {
+      
+      sigma_t[i] <- sqrt(beta * sigma_t[i-1]^2 + alpha * predictions[i-1]^2 + omega)
+      
+    }
+    
+  }
+  
+  return(sigma_t)
+}
+
+sigma_formodel <- create_sigma_t(alpha1, beta1, omega, how_many_days_predict)
+
+```
+
+Finally, we provide predicted values with confidence intervals to investigate out-of-sample fit:
+
+```{r}
+# Graph with confidence bounds
+preddata <- data.frame(predictions = predictions,
+           date = seq(
+             from = as_date(covid19$date[400]) + 1,
+             length.out = how_many_days_predict, 
+             by = "1 day"),
+           sigma_t = sigma_formodel
+)
+
+
+preddata %>%
+  ggplot() + geom_line(aes(x = date, y = predictions)) 
+```
+
+Hence, we expect to see a sharp drop in cases following the end of February, after which we expect a stabilization of number of cases around a mean of around 70,000 new cases a day. Of course, there are limitations to this analysis: being atheoretical, there is no way to incorporate the vaccination of the population, nor is there any component that incorporates government activity. Secondly, estimation of the variance is very large, effectively excluding no possible data points from happening. In sum, a prediction based on these values, especially over a longer period, is not very valuable. 
