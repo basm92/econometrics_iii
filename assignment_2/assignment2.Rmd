@@ -324,10 +324,6 @@ Now, we see that both hypotheses are rejected! We conclude that both of these se
 
 **Part 4**
 
-Assuming both series are I(1), test for cointegration betweenconsumptionandincomebyregressingconsumptiononincomeand performing a unit-root test on the residuals.  Reportthe  estimated  regression  coefficients.  
-
-Plot  the  regression  residuals.   Use  the  SchwartzInformation Criterion (SIC) to determine the number of ADF lags in your unit-root residualtest.  Report the cointegration test statistic.  Do you reject cointegration?
-
 ```{r, results='asis'}
 
 consincreg <- lm(data = df4, 
@@ -341,6 +337,7 @@ consincreg %>%
 
 
 ```{r cointegration, results='hide'}
+plot(consincreg$residuals)
 
 urt2 <- unit_root_test(consincreg$residuals, 
                order = 12, 
@@ -353,7 +350,7 @@ rownames(urt2) <- NULL
 knitr::kable(urt2)
 ```
 
-We observe that the hypothesis of a unit root in the residuals is rejected, indicating that the two series are cointegrated: $Cons, Inc \sim CI(1,1)$. 
+We observe that the hypothesis of a unit root in the residuals is rejected, indicating that the two series are cointegrated: $Cons, Inc \sim CI(1,1)$. Using general-to-specific approach with BIC, a determined number of lags is two.
 
 **Part 5**
 
