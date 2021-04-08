@@ -190,15 +190,17 @@ p_tplush <- df3 %>%
   slice_tail(n=1) %>%
   select(c("APPLE", "MICROSOFT")) 
 
-var_apple <- lm(data = df3 %>%
-     select("APPLE"), 
-   formula = APPLE ~ lag(APPLE, 1)) %>%
+apple_t <- matrix(df3$APPLE, ncol=1)
+apple_lags <- cbind(apple_t, c(NA, apple_t))
+
+var_apple <- lm(apple_lags[,1] ~ apple_lags[,2]) %>%
   .$residuals %>%
   var()
 
-var_microsoft <- lm(data = df3 %>%
-     select("MICROSOFT"), 
-   formula = MICROSOFT ~ lag(MICROSOFT, 1)) %>%
+microsoft_t <- matrix(df3$MICROSOFT, ncol = 1) 
+microsoft_lags <- cbind(microsoft_t, c(NA, microsoft_t))
+
+var_microsoft <- lm(microsoft_lags[,1] ~ microsoft_lags[,2]) %>%
   .$residuals %>%
   var()
 
@@ -545,6 +547,42 @@ We observe that the first differences are stationary. Hence, we can use a regula
 
 Hence, first, we estimate an Arima model on the first-differences data, using the AIC-criterion to go from general to specific models. Then, we convert back the estimates to compute the in-sample fit, and visually assess in-sample accuracy:
 
+```{r datamining, eval = FALSE}
+get_arima_model <- function(max.p, max.q){
+  
+  p_best <- vector()
+  q_best <- vector()
+  
+  aic <- 100000
+  
+  for(i in 1:max.p){
+    
+    for(j in 1:max.q){
+      arima <- try(forecast::Arima(covid19$new_cases, order = c(i, 1, j)))
+      aic_new <- try(arima$aic)
+      
+      if(aic_new < aic){
+        aic <- aic_new
+        p_best <- i
+        q_best <- j
+      }
+      
+    }
+    
+  }
+  
+  bestmodel <- forecast::Arima(covid19$new_cases, order = c(p_best, 1, q_best))
+  
+  return(bestmodel)
+  
+}
+```
+
+```{r}
+#get_arima_model(8,8)
+```
+
+
 ```{r}
 arimamodel <- forecast::Arima(covid19$new_cases, order = c(4, 1, 1),
                               include.constant = FALSE)
@@ -617,7 +655,7 @@ Finally, we provide predicted values with confidence intervals to investigate ou
 # Graph with confidence bounds
 preddata <- data.frame(predictions = predictions,
            date = seq(
-             from = as_date(covid19$date[400]) + 1,
+             from = lubridate::as_date(covid19$date[400]) + 1,
              length.out = how_many_days_predict, 
              by = "1 day"),
            sigma_t = sigma_formodel

@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2021.3.25)  6 APR 2021 18:41
+This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2021.3.25)  8 APR 2021 13:19
  restricted system commands enabled.
 **assignment2.tex
 (./assignment2.tex
@@ -1051,26 +1051,26 @@ df)
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-14-1.pdf  
 used on input line 1019.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
-[13] [14<./assignment2_files/figure-latex/unnamed-chunk-14-1.pdf>]
-<assignment2_files/figure-latex/unnamed-chunk-16-1.pdf, id=172, 469.755pt x 325.
+[13] [14<./assignment2_files/figure-latex/unnamed-chunk-14-1.pdf>] [15]
+<assignment2_files/figure-latex/unnamed-chunk-17-1.pdf, id=180, 469.755pt x 325.
 215pt>
-File: assignment2_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type p
+File: assignment2_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type p
 df)
-<use assignment2_files/figure-latex/unnamed-chunk-16-1.pdf>
-Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-16-1.pdf  
-used on input line 1110.
+<use assignment2_files/figure-latex/unnamed-chunk-17-1.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-17-1.pdf  
+used on input line 1157.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
-[15<./assignment2_files/figure-latex/unnamed-chunk-16-1.pdf>] [16]
-<assignment2_files/figure-latex/unnamed-chunk-20-1.pdf, id=189, 469.755pt x 325.
+[16<./assignment2_files/figure-latex/unnamed-chunk-17-1.pdf>]
+<assignment2_files/figure-latex/unnamed-chunk-21-1.pdf, id=189, 469.755pt x 325.
 215pt>
-File: assignment2_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type p
+File: assignment2_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (type p
 df)
-<use assignment2_files/figure-latex/unnamed-chunk-20-1.pdf>
-Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-20-1.pdf  
-used on input line 1206.
+<use assignment2_files/figure-latex/unnamed-chunk-21-1.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-21-1.pdf  
+used on input line 1253.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
-[17<./assignment2_files/figure-latex/unnamed-chunk-20-1.pdf>] (./assignment2.au
-x)
+[17<./assignment2_files/figure-latex/unnamed-chunk-21-1.pdf>] [18] (./assignmen
+t2.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -1079,14 +1079,14 @@ Package rerunfilecheck Info: File `assignment2.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 17754 strings out of 478534
+ 17755 strings out of 478534
  100000,953878 words of node,token memory allocated
  536 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 8 attribute, 60 glue_spec,
  8 attribute_list, 1 write, 1 user_defined nodes
    avail lists: 1:1,2:1386,3:212,4:526,5:336,6:21,7:5860,8:31,9:583,10:13,11:278
  36982 multiletter control sequences out of 65536+600000
- 73 fonts using 21359115 bytes
+ 73 fonts using 21359191 bytes
  98i,10n,122p,480b,399s stack positions out of 5000i,500n,10000p,200000b,200000s
 </Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroma
 n10-italic.otf></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/p
@@ -1103,10 +1103,10 @@ en/Library/TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf></User
 s/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman12-re
 gular.otf></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/public
 /lm/lmroman17-regular.otf>
-Output written on assignment2.pdf (17 pages, 183982 bytes).
+Output written on assignment2.pdf (18 pages, 185488 bytes).
 
-PDF statistics: 278 PDF objects out of 1000 (max. 8388607)
- 178 compressed objects within 2 object streams
- 34 named destinations out of 1000 (max. 131072)
+PDF statistics: 282 PDF objects out of 1000 (max. 8388607)
+ 181 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 131072)
  25 words of extra memory for PDF output out of 10000 (max. 100000000)
 
