@@ -545,46 +545,38 @@ unit_root_test(covid19$diffcases, 4, 2.0) %>%
 
 We observe that the first differences are stationary. Hence, we can use a regular ARMA process on the first differences. However, the ARMA-class of models assumes a constant error variance, whereas in the plot, we can observe that the variance is non-constant. To model this behavior, we might resort to the GARCH-class of models. From a [lemma based on stack overflow](https://stats.stackexchange.com/questions/292680/volatility-of-original-vs-first-differenced-series-in-arimagarch-in-r), we know that the conditional variance of a first-differenced series $\Delta X_t$ is equal to the conditional variance of the original series $X_t$. Hence, we can use the original data to generate the variance and standard errors corresponding to our predictions (point estimates) made by the AR(I)MA class of models. Hence, in the end, we deliver predictions that can be applied to original, levels, i.e. the non-stationary data series, and predict New Cases, rather than predicting first differences. 
 
-Hence, first, we estimate an Arima model on the first-differences data, using the AIC-criterion to go from general to specific models. Then, we convert back the estimates to compute the in-sample fit, and visually assess in-sample accuracy:
+Hence, first, we estimate an Arima model on the first-differences data, using the AIC-criterion to go from general to specific models. The selection is implemented in Python, the rest is implemented in R. Then, we convert back the estimates to compute the in-sample fit, and visually assess in-sample accuracy. 
 
-```{r datamining, eval = FALSE}
-get_arima_model <- function(max.p, max.q){
+```{python, warning = FALSE}
+from statsmodels.tsa.arima.model import ARIMA
+import numpy as np
+import warnings
+warnings.filterwarnings('ignore')
+
+best_p = None
+best_q = None
+best_aic = 10000
+
+for i in reversed(range(1,5)):
   
-  p_best <- vector()
-  q_best <- vector()
-  
-  aic <- 100000
-  
-  for(i in 1:max.p){
+  for j in reversed(range(1, 5)):
     
-    for(j in 1:max.q){
-      arima <- try(forecast::Arima(covid19$new_cases, order = c(i, 1, j)))
-      aic_new <- try(arima$aic)
-      
-      if(aic_new < aic){
-        aic <- aic_new
-        p_best <- i
-        q_best <- j
-      }
-      
-    }
+    arima = ARIMA(coviddixneuf['New Cases'], order =(i, 1, j))
+    arima_fit = arima.fit()
     
-  }
-  
-  bestmodel <- forecast::Arima(covid19$new_cases, order = c(p_best, 1, q_best))
-  
-  return(bestmodel)
-  
-}
+    if arima_fit.aic < best_aic:
+      best_aic = arima_fit.aic
+      best_p = i
+      best_q = j
+
+print("Best p:", best_p, "\n", "Best q:", best_q)
 ```
 
-```{r}
-#get_arima_model(8,8)
-```
+Hence, the best ARIMA-model is of the order (4, 1, 3). We now implement this in R: 
 
 
 ```{r}
-arimamodel <- forecast::Arima(covid19$new_cases, order = c(4, 1, 1),
+arimamodel <- forecast::Arima(covid19$new_cases, order = c(4, 1, 3),
                               include.constant = FALSE)
 
 evalarima <- data.frame(date = covid19$date,
@@ -597,7 +589,13 @@ evalarima %>%
 
 ```
 
-We predict the values for the Arima model:
+We can verify whether the model is well-specified by checking for autocorrelation in the residuals, from which we conclude that the model is well-specified:
+
+```{r}
+acf(arimamodel$residuals)
+```
+
+We then predict the values for the Arima model:
 
 ```{r}
 how_many_days_predict <- 14
@@ -666,4 +664,4 @@ preddata %>%
   ggplot() + geom_line(aes(x = date, y = predictions)) 
 ```
 
-Hence, we expect to see a sharp drop in cases following the end of February, after which we expect a stabilization of number of cases around a mean of around 70,000 new cases a day. Of course, there are limitations to this analysis: being atheoretical, there is no way to incorporate the vaccination of the population, nor is there any component that incorporates government activity. Secondly, estimation of the variance is very large, effectively excluding no possible data points from happening. In sum, a prediction based on these values, especially over a longer period, is not very valuable. 
+Hence, we expect to see a sharp drop in cases following the end of February, after which we expect a stabilization of number of cases around a mean of around 70,000 new cases a day. Of course, there are limitations to this analysis: being atheoretical, there is no way to incorporate the vaccination of the population, nor is there any component that incorporates government activity. Secondly, as is evident from the modeling of the volatility, estimation of the variance is very large, effectively excluding no possible data points from happening. In sum, a prediction based on these values, especially over a longer period, is not very valuable. 

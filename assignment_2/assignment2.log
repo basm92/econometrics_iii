@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2021.3.25)  8 APR 2021 13:19
+This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2021.3.25)  8 APR 2021 14:54
  restricted system commands enabled.
 **assignment2.tex
 (./assignment2.tex
@@ -1004,7 +1004,7 @@ File: assignment2_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pd
 f)
 <use assignment2_files/figure-latex/unnamed-chunk-2-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-2-1.pdf  u
-sed on input line 385.
+sed on input line 387.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 <assignment2_files/figure-latex/unnamed-chunk-2-2.pdf, id=61, 469.755pt x 325.21
 5pt>
@@ -1012,7 +1012,7 @@ File: assignment2_files/figure-latex/unnamed-chunk-2-2.pdf Graphic file (type pd
 f)
 <use assignment2_files/figure-latex/unnamed-chunk-2-2.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-2-2.pdf  u
-sed on input line 397.
+sed on input line 399.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 [5<./assignment2_files/figure-latex/unnamed-chunk-2-1.pdf>] [6<./assignment2_fil
 es/figure-latex/unnamed-chunk-2-2.pdf>]
@@ -1022,7 +1022,7 @@ File: assignment2_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pd
 f)
 <use assignment2_files/figure-latex/unnamed-chunk-4-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-4-1.pdf  u
-sed on input line 487.
+sed on input line 489.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 <assignment2_files/figure-latex/unnamed-chunk-4-2.pdf, id=82, 469.755pt x 325.21
 5pt>
@@ -1030,7 +1030,7 @@ File: assignment2_files/figure-latex/unnamed-chunk-4-2.pdf Graphic file (type pd
 f)
 <use assignment2_files/figure-latex/unnamed-chunk-4-2.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-4-2.pdf  u
-sed on input line 507.
+sed on input line 509.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 [7<./assignment2_files/figure-latex/unnamed-chunk-4-1.pdf>] [8<./assignment2_fil
 es/figure-latex/unnamed-chunk-4-2.pdf>]
@@ -1040,7 +1040,7 @@ File: assignment2_files/figure-latex/cointegration-1.pdf Graphic file (type pdf)
 
 <use assignment2_files/figure-latex/cointegration-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/cointegration-1.pdf  use
-d on input line 665.
+d on input line 667.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 [9] [10<./assignment2_files/figure-latex/cointegration-1.pdf>] [11] [12]
 <assignment2_files/figure-latex/unnamed-chunk-14-1.pdf, id=127, 469.755pt x 325.
@@ -1049,7 +1049,7 @@ File: assignment2_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type p
 df)
 <use assignment2_files/figure-latex/unnamed-chunk-14-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-14-1.pdf  
-used on input line 1019.
+used on input line 1021.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 [13] [14<./assignment2_files/figure-latex/unnamed-chunk-14-1.pdf>] [15]
 <assignment2_files/figure-latex/unnamed-chunk-17-1.pdf, id=180, 469.755pt x 325.
@@ -1058,18 +1058,27 @@ File: assignment2_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type p
 df)
 <use assignment2_files/figure-latex/unnamed-chunk-17-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-17-1.pdf  
-used on input line 1157.
+used on input line 1152.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
-[16<./assignment2_files/figure-latex/unnamed-chunk-17-1.pdf>]
-<assignment2_files/figure-latex/unnamed-chunk-21-1.pdf, id=189, 469.755pt x 325.
+<assignment2_files/figure-latex/unnamed-chunk-18-1.pdf, id=181, 469.755pt x 325.
 215pt>
-File: assignment2_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (type p
+File: assignment2_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type p
 df)
-<use assignment2_files/figure-latex/unnamed-chunk-21-1.pdf>
-Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-21-1.pdf  
-used on input line 1253.
+<use assignment2_files/figure-latex/unnamed-chunk-18-1.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-18-1.pdf  
+used on input line 1168.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
-[17<./assignment2_files/figure-latex/unnamed-chunk-21-1.pdf>] [18] (./assignmen
+[16<./assignment2_files/figure-latex/unnamed-chunk-17-1.pdf><./assignment2_files
+/figure-latex/unnamed-chunk-18-1.pdf>]
+<assignment2_files/figure-latex/unnamed-chunk-22-1.pdf, id=195, 469.755pt x 325.
+215pt>
+File: assignment2_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type p
+df)
+<use assignment2_files/figure-latex/unnamed-chunk-22-1.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-22-1.pdf  
+used on input line 1264.
+(luatex.def)             Requested size: 288.89403pt x 200.00356pt.
+[17] [18<./assignment2_files/figure-latex/unnamed-chunk-22-1.pdf>] (./assignmen
 t2.aux)
 
 LaTeX Warning: There were multiply-defined labels.
@@ -1079,14 +1088,14 @@ Package rerunfilecheck Info: File `assignment2.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 17755 strings out of 478534
+ 17767 strings out of 478534
  100000,953878 words of node,token memory allocated
  536 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 8 attribute, 60 glue_spec,
  8 attribute_list, 1 write, 1 user_defined nodes
-   avail lists: 1:1,2:1386,3:212,4:526,5:336,6:21,7:5860,8:31,9:583,10:13,11:278
- 36982 multiletter control sequences out of 65536+600000
- 73 fonts using 21359191 bytes
+   avail lists: 1:1,2:1434,3:212,4:558,5:348,6:21,7:5888,8:31,9:587,10:13,11:278
+ 36988 multiletter control sequences out of 65536+600000
+ 73 fonts using 21359267 bytes
  98i,10n,122p,480b,399s stack positions out of 5000i,500n,10000p,200000b,200000s
 </Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroma
 n10-italic.otf></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/p
@@ -1103,10 +1112,10 @@ en/Library/TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf></User
 s/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman12-re
 gular.otf></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/public
 /lm/lmroman17-regular.otf>
-Output written on assignment2.pdf (18 pages, 185488 bytes).
+Output written on assignment2.pdf (18 pages, 190126 bytes).
 
-PDF statistics: 282 PDF objects out of 1000 (max. 8388607)
- 181 compressed objects within 2 object streams
+PDF statistics: 288 PDF objects out of 1000 (max. 8388607)
+ 185 compressed objects within 2 object streams
  35 named destinations out of 1000 (max. 131072)
  25 words of extra memory for PDF output out of 10000 (max. 100000000)
 
