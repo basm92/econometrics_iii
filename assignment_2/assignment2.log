@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2021.3.25)  8 APR 2021 17:38
+=======
+This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2021.3.25)  8 APR 2021 17:43
+>>>>>>> attempt_bas
  restricted system commands enabled.
 **assignment2.tex
 (./assignment2.tex
@@ -525,26 +529,7 @@ Package graphics Info: Driver file: luatex.def on input line 105.
 )
 \Gin@req@height=\dimen182
 \Gin@req@width=\dimen183
-)
-(/Users/basmachielsen/Library/TinyTeX/texmf-dist/tex/lualatex/selnolig/selnolig
-.sty
-=== Package selnolig, Version 0.302, Date 2015/10/26 ===
-Package: selnolig 2015/10/26
-
-(/Users/basmachielsen/Library/TinyTeX/texmf-dist/tex/luatex/luatexbase/luatexba
-se.sty
-Package: luatexbase 2015/10/04 v1.3 luatexbase interface to LuaTeX 
-
-(/Users/basmachielsen/Library/TinyTeX/texmf-dist/tex/luatex/ctablestack/ctables
-tack.sty
-Package: ctablestack 2015/10/01 v1.0 Catcode table stable support
-\@catcodetablestackcnt=\count302
-)
-\CatcodeTableOther=\catcodetable12
-\CatcodeTableExpl=\catcodetable13
-)
-Inserting `Suppress ligatures selectively' at position 1 in `ligaturing'.) (./a
-ssignment2.aux
+) (./assignment2.aux
 
 LaTeX Warning: Label `' multiply defined.
 
@@ -557,40 +542,40 @@ LaTeX Warning: Label `' multiply defined.
 )
 \openout1 = assignment2.aux
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 122.
-LaTeX Font Info:    ... okay on input line 122.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 122.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 119.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 122.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 119.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 122.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 119.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 122.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 119.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 122.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 119.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 122.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 119.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 122.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 119.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -625,7 +610,7 @@ e;script=math;language=dflt;"
 (fontspec)             \__um_luatex_copy_fontdimens: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 122.
+(Font)              scaled to size 10.0pt on input line 119.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -669,17 +654,17 @@ e;script=math;language=dflt;"
 (fontspec)             \__um_luatex_copy_fontdimens: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 122.
+(Font)              scaled to size 10.0pt on input line 119.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 122.
+(Font)              `operators' in the math version `normal' on input line 119.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input 
-line 122.
+line 119.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 122.
+(Font)              `operators' in the math version `bold' on input line 119.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input
- line 122.
+ line 119.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -769,15 +754,15 @@ modern-math.otf]:mode=base;script=math;language=dflt;+ssty=1;"
 (fontspec)             21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 122.
+(Font)              `symbols' in the math version `normal' on input line 119.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input
- line 122.
+ line 119.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 122.
+(Font)              `symbols' in the math version `bold' on input line 119.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input
- line 122.
+ line 119.
 
 Package fontspec Info: latinmodern-math scale = 0.9999964596882403.
 
@@ -849,44 +834,44 @@ e;script=math;language=dflt;"
 (fontspec)             \fontdimen 13\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 12
-2.
+(Font)              `largesymbols' in the math version `normal' on input line 11
+9.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input
- line 122.
+ line 119.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 122.
+(Font)              `largesymbols' in the math version `bold' on input line 119.
 
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input
- line 122.
+ line 119.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 122.
+(Font)              scaled to size 7.0pt on input line 119.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 122.
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 12
-2.
+(Font)              scaled to size 5.0pt on input line 119.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 11
+9.
 (/Users/basmachielsen/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 122.
+(Font)              scaled to size 10.00092pt on input line 119.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 122.
+(Font)              scaled to size 7.00064pt on input line 119.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 122.
+(Font)              scaled to size 5.00046pt on input line 119.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 122.
+(Font)              scaled to size 9.99893pt on input line 119.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 122.
+(Font)              scaled to size 6.99925pt on input line 119.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 122.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 122.
+(Font)              scaled to size 4.99947pt on input line 119.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 119.
 
 (/Users/basmachielsen/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 122.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 119.
 
 (/Users/basmachielsen/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -902,7 +887,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 
 ))
-Package hyperref Info: Link coloring OFF on input line 122.
+Package hyperref Info: Link coloring OFF on input line 119.
 
 (/Users/basmachielsen/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -915,11 +900,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 titlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count303
+\c@section@level=\count302
 )
-LaTeX Info: Redefining \ref on input line 122.
-LaTeX Info: Redefining \pageref on input line 122.
-LaTeX Info: Redefining \nameref on input line 122.
+LaTeX Info: Redefining \ref on input line 119.
+LaTeX Info: Redefining \pageref on input line 119.
+LaTeX Info: Redefining \nameref on input line 119.
 (./assignment2.out) (./assignment2.out)
 \@outlinefile=\write4
 
@@ -959,45 +944,45 @@ LaTeX Info: Redefining \nameref on input line 122.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 124.
+(Font)              scaled to size 12.0pt on input line 121.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 124.
+(Font)              scaled to size 8.0pt on input line 121.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 124.
+(Font)              scaled to size 6.0pt on input line 121.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 12.0011pt on input line 124.
+(Font)              scaled to size 12.0011pt on input line 121.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.00073pt on input line 124.
+(Font)              scaled to size 8.00073pt on input line 121.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 124.
+(Font)              scaled to size 6.00055pt on input line 121.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 124.
+(Font)              scaled to size 11.99872pt on input line 121.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.99915pt on input line 124.
+(Font)              scaled to size 7.99915pt on input line 121.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 124.
+(Font)              scaled to size 5.99936pt on input line 121.
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <9> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 133.
 <assignment2_files/figure-latex/plot-1.pdf, id=18, 469.755pt x 325.215pt>
 File: assignment2_files/figure-latex/plot-1.pdf Graphic file (type pdf)
 <use assignment2_files/figure-latex/plot-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/plot-1.pdf  used on inpu
-t line 152.
+t line 149.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 [1
 
 {/Users/basmachielsen/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.m
 ap}<./assignment2_files/figure-latex/plot-1.pdf>]
-<assignment2_files/figure-latex/autocor-1.pdf, id=36, 469.755pt x 325.215pt>
+<assignment2_files/figure-latex/autocor-1.pdf, id=37, 469.755pt x 325.215pt>
 File: assignment2_files/figure-latex/autocor-1.pdf Graphic file (type pdf)
 <use assignment2_files/figure-latex/autocor-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/autocor-1.pdf  used on i
-nput line 181.
+nput line 178.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
-[2<./assignment2_files/figure-latex/autocor-1.pdf>]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <9> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 199.
-[3
+[2<./assignment2_files/figure-latex/autocor-1.pdf>] [3
 
 ] [4]
+<<<<<<< HEAD
 <assignment2_files/figure-latex/unnamed-chunk-19-1.pdf, id=60, 469.755pt x 325.2
 15pt>
 File: assignment2_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type p
@@ -1031,6 +1016,41 @@ df)
 <use assignment2_files/figure-latex/unnamed-chunk-21-2.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-21-2.pdf  
 used on input line 509.
+=======
+<assignment2_files/figure-latex/unnamed-chunk-2-1.pdf, id=60, 469.755pt x 325.21
+5pt>
+File: assignment2_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pd
+f)
+<use assignment2_files/figure-latex/unnamed-chunk-2-1.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-2-1.pdf  u
+sed on input line 384.
+(luatex.def)             Requested size: 288.89403pt x 200.00356pt.
+<assignment2_files/figure-latex/unnamed-chunk-2-2.pdf, id=61, 469.755pt x 325.21
+5pt>
+File: assignment2_files/figure-latex/unnamed-chunk-2-2.pdf Graphic file (type pd
+f)
+<use assignment2_files/figure-latex/unnamed-chunk-2-2.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-2-2.pdf  u
+sed on input line 396.
+(luatex.def)             Requested size: 288.89403pt x 200.00356pt.
+[5<./assignment2_files/figure-latex/unnamed-chunk-2-1.pdf>] [6<./assignment2_fil
+es/figure-latex/unnamed-chunk-2-2.pdf>]
+<assignment2_files/figure-latex/unnamed-chunk-4-1.pdf, id=81, 469.755pt x 325.21
+5pt>
+File: assignment2_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pd
+f)
+<use assignment2_files/figure-latex/unnamed-chunk-4-1.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-4-1.pdf  u
+sed on input line 486.
+(luatex.def)             Requested size: 288.89403pt x 200.00356pt.
+<assignment2_files/figure-latex/unnamed-chunk-4-2.pdf, id=82, 469.755pt x 325.21
+5pt>
+File: assignment2_files/figure-latex/unnamed-chunk-4-2.pdf Graphic file (type pd
+f)
+<use assignment2_files/figure-latex/unnamed-chunk-4-2.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-4-2.pdf  u
+sed on input line 506.
+>>>>>>> attempt_bas
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 [7<./assignment2_files/figure-latex/unnamed-chunk-21-1.pdf>] [8<./assignment2_fi
 les/figure-latex/unnamed-chunk-21-2.pdf>]
@@ -1040,33 +1060,51 @@ File: assignment2_files/figure-latex/cointegration-1.pdf Graphic file (type pdf)
 
 <use assignment2_files/figure-latex/cointegration-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/cointegration-1.pdf  use
-d on input line 667.
+d on input line 664.
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 [9] [10<./assignment2_files/figure-latex/cointegration-1.pdf>] [11] [12]
 <assignment2_files/figure-latex/unnamed-chunk-31-1.pdf, id=127, 469.755pt x 325.
 215pt>
 File: assignment2_files/figure-latex/unnamed-chunk-31-1.pdf Graphic file (type p
 df)
+<<<<<<< HEAD
 <use assignment2_files/figure-latex/unnamed-chunk-31-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-31-1.pdf  
 used on input line 1016.
+=======
+<use assignment2_files/figure-latex/unnamed-chunk-14-1.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-14-1.pdf  
+used on input line 1018.
+>>>>>>> attempt_bas
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 [13] [14<./assignment2_files/figure-latex/unnamed-chunk-31-1.pdf>] [15]
 <assignment2_files/figure-latex/unnamed-chunk-34-1.pdf, id=180, 469.755pt x 325.
 215pt>
 File: assignment2_files/figure-latex/unnamed-chunk-34-1.pdf Graphic file (type p
 df)
+<<<<<<< HEAD
 <use assignment2_files/figure-latex/unnamed-chunk-34-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-34-1.pdf  
 used on input line 1147.
+=======
+<use assignment2_files/figure-latex/unnamed-chunk-17-1.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-17-1.pdf  
+used on input line 1149.
+>>>>>>> attempt_bas
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 <assignment2_files/figure-latex/unnamed-chunk-35-1.pdf, id=181, 469.755pt x 325.
 215pt>
 File: assignment2_files/figure-latex/unnamed-chunk-35-1.pdf Graphic file (type p
 df)
+<<<<<<< HEAD
 <use assignment2_files/figure-latex/unnamed-chunk-35-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-35-1.pdf  
 used on input line 1163.
+=======
+<use assignment2_files/figure-latex/unnamed-chunk-18-1.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-18-1.pdf  
+used on input line 1165.
+>>>>>>> attempt_bas
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 [16<./assignment2_files/figure-latex/unnamed-chunk-34-1.pdf><./assignment2_files
 /figure-latex/unnamed-chunk-35-1.pdf>]
@@ -1074,9 +1112,15 @@ used on input line 1163.
 215pt>
 File: assignment2_files/figure-latex/unnamed-chunk-39-1.pdf Graphic file (type p
 df)
+<<<<<<< HEAD
 <use assignment2_files/figure-latex/unnamed-chunk-39-1.pdf>
 Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-39-1.pdf  
 used on input line 1259.
+=======
+<use assignment2_files/figure-latex/unnamed-chunk-22-1.pdf>
+Package luatex.def Info: assignment2_files/figure-latex/unnamed-chunk-22-1.pdf  
+used on input line 1261.
+>>>>>>> attempt_bas
 (luatex.def)             Requested size: 288.89403pt x 200.00356pt.
 [17] [18<./assignment2_files/figure-latex/unnamed-chunk-39-1.pdf>] (./assignmen
 t2.aux)
@@ -1088,8 +1132,9 @@ Package rerunfilecheck Info: File `assignment2.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 17767 strings out of 478534
+ 17623 strings out of 478534
  100000,953878 words of node,token memory allocated
+<<<<<<< HEAD
  536 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 8 attribute, 60 glue_spec,
  8 attribute_list, 1 write, 1 user_defined nodes
@@ -1097,6 +1142,15 @@ Here is how much of LuaTeX's memory you used:
  36988 multiletter control sequences out of 65536+600000
  73 fonts using 21359419 bytes
  98i,10n,122p,480b,399s stack positions out of 5000i,500n,10000p,200000b,200000s
+=======
+ 528 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 7 attribute, 60 glue_spec,
+ 7 attribute_list, 1 write nodes
+   avail lists: 2:1828,3:212,4:658,5:448,6:21,7:5891,8:31,9:587,10:13,11:281
+ 36871 multiletter control sequences out of 65536+600000
+ 73 fonts using 21359191 bytes
+ 98i,10n,122p,516b,399s stack positions out of 5000i,500n,10000p,200000b,200000s
+>>>>>>> attempt_bas
 </Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroma
 n10-italic.otf></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/p
 ublic/lm-math/latinmodern-math.otf></Users/basmachielsen/Library/TinyTeX/texmf-d
@@ -1112,7 +1166,11 @@ en/Library/TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf></User
 s/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman12-re
 gular.otf></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/opentype/public
 /lm/lmroman17-regular.otf>
+<<<<<<< HEAD
 Output written on assignment2.pdf (18 pages, 191325 bytes).
+=======
+Output written on assignment2.pdf (18 pages, 193800 bytes).
+>>>>>>> attempt_bas
 
 PDF statistics: 288 PDF objects out of 1000 (max. 8388607)
  185 compressed objects within 2 object streams

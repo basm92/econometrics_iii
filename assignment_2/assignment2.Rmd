@@ -458,7 +458,7 @@ _Report and interpret the short-run and long-run multipliers.  Report and interp
 
 <!-- Lecture 4, slide 78 and onward: error correction model interpretation -->
 
-The error correction coefficient $\gamma$ = `r bestmodel$coefficients[1]` and it is statistically significant from zero, meaning there is a (relatively small) correction towards the equilibrium value.
+The error correction coefficient $\gamma$ = `r bestmodel$coefficients[1]` means that if consumption and income are away from their long-run relationship, there is a correction towards the equilibrium value. For example, if there is a positive residual, meaning consumption is too high relative to the income at a given point in time, in the next period,we tend to observe a _decrease_ in consumption to correct for that. 
 
 The short-run multipliers can be derived from the coefficient belonging to $\Delta X_t$. An (positive) exogenous shock in income causes an increase in consumption (0.20). The effects of that shock also appear three periods later (reflected by the coefficient on $\Delta Y_{t-3}$). 
 
